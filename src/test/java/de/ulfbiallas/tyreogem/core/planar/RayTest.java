@@ -24,44 +24,44 @@ public class RayTest {
     }
 
     @Test
-    public void test_intersectionWithRay_nonIntersecting() {
-        final RayIntersection iRay1ray2 = ray1.intersect(ray2);
-        Assert.assertFalse(iRay1ray2.isIntersecting());
-        Assert.assertNull(iRay1ray2.getIntersection());
-        Assert.assertEquals(iRay1ray2.getParameter(), 0.0, 0.00001);
+    public void test_intersectionWithRay_intersecting() {
+        final RayIntersection iRay1Ray3 = ray1.intersect(ray3);
+        Assert.assertTrue(iRay1Ray3.isIntersecting());
+        Assert.assertEquals(4.0, iRay1Ray3.getIntersection().x, 0.00001);
+        Assert.assertEquals(5.0, iRay1Ray3.getIntersection().y, 0.00001);
+        Assert.assertEquals(iRay1Ray3.getParameter(), 2.0, 0.00001);
 
-        final RayIntersection iRay2ray1 = ray2.intersect(ray1);
-        Assert.assertFalse(iRay2ray1.isIntersecting());
-        Assert.assertNull(iRay2ray1.getIntersection());
-        Assert.assertEquals(iRay2ray1.getParameter(), 0.0, 0.00001);
+        final RayIntersection iRay3Ray1 = ray3.intersect(ray1);
+        Assert.assertTrue(iRay3Ray1.isIntersecting());
+        Assert.assertEquals(4.0, iRay3Ray1.getIntersection().x, 0.00001);
+        Assert.assertEquals(5.0, iRay3Ray1.getIntersection().y, 0.00001);
+        Assert.assertEquals(iRay3Ray1.getParameter(), 6.0, 0.00001);
+    }
+
+    @Test
+    public void test_intersectionWithRay_nonIntersecting() {
+        final RayIntersection iRay1Ray2 = ray1.intersect(ray2);
+        Assert.assertFalse(iRay1Ray2.isIntersecting());
+        Assert.assertNull(iRay1Ray2.getIntersection());
+        Assert.assertEquals(iRay1Ray2.getParameter(), 0.0, 0.00001);
+
+        final RayIntersection iRay2Ray1 = ray2.intersect(ray1);
+        Assert.assertFalse(iRay2Ray1.isIntersecting());
+        Assert.assertNull(iRay2Ray1.getIntersection());
+        Assert.assertEquals(iRay2Ray1.getParameter(), 0.0, 0.00001);
     }
 
     @Test
     public void test_intersectionWithRay_nonIntersecting2() {
-        final RayIntersection iRay2ray3 = ray2.intersect(ray3);
-        Assert.assertFalse(iRay2ray3.isIntersecting());
-        Assert.assertNull(iRay2ray3.getIntersection());
-        Assert.assertEquals(iRay2ray3.getParameter(), 0.0, 0.00001);
+        final RayIntersection iRay2Ray3 = ray2.intersect(ray3);
+        Assert.assertFalse(iRay2Ray3.isIntersecting());
+        Assert.assertNull(iRay2Ray3.getIntersection());
+        Assert.assertEquals(iRay2Ray3.getParameter(), 0.0, 0.00001);
 
-        final RayIntersection iRay3ray2 = ray3.intersect(ray2);
-        Assert.assertFalse(iRay3ray2.isIntersecting());
-        Assert.assertNull(iRay3ray2.getIntersection());
-        Assert.assertEquals(iRay3ray2.getParameter(), 0.0, 0.00001);
-    }
-
-    @Test
-    public void test_intersectionWithRay_intersecting() {
-        final RayIntersection iRay1ray3 = ray1.intersect(ray3);
-        Assert.assertTrue(iRay1ray3.isIntersecting());
-        Assert.assertEquals(4.0, iRay1ray3.getIntersection().x, 0.00001);
-        Assert.assertEquals(5.0, iRay1ray3.getIntersection().y, 0.00001);
-        Assert.assertEquals(iRay1ray3.getParameter(), 2.0, 0.00001);
-
-        final RayIntersection iRay3ray1 = ray3.intersect(ray1);
-        Assert.assertTrue(iRay3ray1.isIntersecting());
-        Assert.assertEquals(4.0, iRay3ray1.getIntersection().x, 0.00001);
-        Assert.assertEquals(5.0, iRay3ray1.getIntersection().y, 0.00001);
-        Assert.assertEquals(iRay3ray1.getParameter(), 6.0, 0.00001);
+        final RayIntersection iRay3Ray2 = ray3.intersect(ray2);
+        Assert.assertFalse(iRay3Ray2.isIntersecting());
+        Assert.assertNull(iRay3Ray2.getIntersection());
+        Assert.assertEquals(iRay3Ray2.getParameter(), 0.0, 0.00001);
     }
 
     @Test
