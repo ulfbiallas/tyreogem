@@ -66,4 +66,14 @@ public class Ray {
         return new RayIntersection();
     }
 
+    public double distanceTo(Vec2d point) {
+        final Line line = Line.createLineWithPointAndDirection(point, getDirection().perpendicular());
+        final RayIntersection intersection = intersect(line);
+        if(intersection.isIntersecting()) {
+            return point.distanceTo(intersection.getIntersection());
+        } else {
+            return point.distanceTo(getOrigin());
+        }
+    }
+
 }

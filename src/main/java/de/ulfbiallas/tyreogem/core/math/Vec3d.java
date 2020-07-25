@@ -58,6 +58,10 @@ public class Vec3d {
         return new Vec3d(x * s, y * s, z * s);
     }
 
+    public Vec3d negate() {
+        return new Vec3d(-x, -y, -z);
+    }
+
     public double norm2() {
         return x * x + y * y + z * z;
     }
@@ -68,6 +72,10 @@ public class Vec3d {
 
     public Vec3d normalize() {
         return this.scale(1.0f / this.norm());
+    }
+
+    public double distanceTo(Vec3d point) {
+        return sub(point).norm();
     }
 
     public Vec3d cross(Vec3d v) {

@@ -111,4 +111,19 @@ public class LineSegmentTest {
         Assert.assertFalse(i.isIntersecting());
         Assert.assertNull(i.getIntersection());
     }
+
+    @Test
+    public void test_distanceTo() {
+        final double distance1 = lineSegment3.distanceTo(new Vec2d(4, 4));
+        Assert.assertEquals(0.0, distance1, 0.00001);
+
+        final double distance2 = lineSegment3.distanceTo(new Vec2d(3, 5));
+        Assert.assertEquals(1.0, distance2, 0.00001);
+
+        final double distance3 = lineSegment3.distanceTo(new Vec2d(4, 0));
+        Assert.assertEquals(2.0, distance3, 0.00001);
+
+        final double distance4 = lineSegment3.distanceTo(new Vec2d(4, 9));
+        Assert.assertEquals(2.0, distance4, 0.00001);
+    }
 }

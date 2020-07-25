@@ -103,4 +103,16 @@ public class RayTest {
         Assert.assertNull(i.getIntersection());
         Assert.assertEquals(i.getParameter(), 0.0, 0.00001);
     }
+
+    @Test
+    public void test_distanceTo() {
+        final double distance1 = ray3.distanceTo(new Vec2d(1, 5));
+        Assert.assertEquals(0.0, distance1, 0.00001);
+
+        final double distance2 = ray3.distanceTo(new Vec2d(0, 4));
+        Assert.assertEquals(1.0, distance2, 0.00001);
+
+        final double distance3 = ray3.distanceTo(new Vec2d(-4, 5));
+        Assert.assertEquals(2.0, distance3, 0.00001);
+    }
 }

@@ -50,4 +50,12 @@ public class Line {
         return ray.intersect(this);
     }
 
+    public double distanceTo(Vec2d point) {
+        final Vec2d p = getPointOnLine();
+        final Vec2d d = getDirection();
+        final double lambda = d.dot(point.sub(p)) / d.dot(d);
+        final Vec2d q = p.add(d.scale(lambda));
+        return point.sub(q).norm();
+    }
+
 }

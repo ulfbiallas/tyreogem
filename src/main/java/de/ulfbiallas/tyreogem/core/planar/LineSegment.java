@@ -70,4 +70,19 @@ public class LineSegment {
         return ray.intersect(this);
     }
 
+    public double distanceTo(Vec2d point) {
+        final Ray lineSegmentRay = new Ray(getStart(), getDirection());
+        final Line line = Line.createLineWithPointAndDirection(point, getDirection().perpendicular());
+        final RayIntersection intersection = lineSegmentRay.intersect(line);
+        if(intersection.isIntersecting()) {
+            if(intersection.getParameter() <= getLength()) {
+                return point.distanceTo(intersection.getIntersection());
+            } else {
+                return point.distanceTo(getEnd());
+            }
+        } else {
+            return point.distanceTo(getStart());
+        }
+    }
+
 }

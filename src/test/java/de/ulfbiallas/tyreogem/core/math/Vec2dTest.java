@@ -122,4 +122,27 @@ public class Vec2dTest {
         Assert.assertEquals(0.60, mean.y, 0.00001);
     }
 
+    @Test
+    public void testNegate() {
+        Vec2d v = new Vec2d(-3.0, 2.0);
+        Vec2d vNegated = v.negate();
+        Assert.assertEquals(-v.x, vNegated.x, 0.00001);
+        Assert.assertEquals(-v.y, vNegated.y, 0.00001);
+    }
+
+    @Test
+    public void testPerpendicular() {
+        Vec2d v = new Vec2d(-3.0, 2.0);
+        Vec2d vPerpendicular = v.perpendicular();
+        double dotProduct = v.dot(vPerpendicular);
+        Assert.assertEquals(0, dotProduct, 0.00001);
+    }
+
+    @Test
+    public void testDistanceToPoint() {
+        Vec2d v = new Vec2d(-3.0, 2.0);
+        Vec2d point = new Vec2d(4, 1);
+        double distance = point.sub(v).norm();
+        Assert.assertEquals(v.distanceTo(point), distance, 0.00001);
+    }
 }
