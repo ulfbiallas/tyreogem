@@ -151,4 +151,20 @@ public class Vec3dTest {
         Assert.assertEquals(2.20, mean.z, 0.00001);
     }
 
+    @Test
+    public void testNegate() {
+        Vec3d v = new Vec3d(-3.0, 2.0, 4.0);
+        Vec3d vNegated = v.negate();
+        Assert.assertEquals(-v.x, vNegated.x, 0.00001);
+        Assert.assertEquals(-v.y, vNegated.y, 0.00001);
+        Assert.assertEquals(-v.z, vNegated.z, 0.00001);
+    }
+
+    @Test
+    public void testDistanceToPoint() {
+        Vec3d v = new Vec3d(-3.0, 2.0, 4.0);
+        Vec3d point = new Vec3d(4.0, 1.0, -3.0);
+        double distance = point.sub(v).norm();
+        Assert.assertEquals(v.distanceTo(point), distance, 0.00001);
+    }
 }

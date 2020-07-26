@@ -54,6 +54,10 @@ public class Vec2d {
         return new Vec2d(-x, -y);
     }
 
+    public Vec2d perpendicular() {
+        return new Vec2d(-y, x);
+    }
+
     public double norm2() {
         return x * x + y * y;
     }
@@ -64,6 +68,10 @@ public class Vec2d {
 
     public Vec2d normalize() {
         return this.scale(1.0f / this.norm());
+    }
+
+    public double distanceTo(Vec2d point) {
+        return sub(point).norm();
     }
 
     public double[] toArray() {
