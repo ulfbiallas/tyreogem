@@ -63,7 +63,7 @@ public class Plane {
         return Math.signum(point.sub(pointOnPlane).dot(normal));
     }
 
-    public double getDistance(Vec3d point) {
+    public double distanceTo(Vec3d point) {
         return Math.abs(point.sub(pointOnPlane).dot(normal));
     }
 

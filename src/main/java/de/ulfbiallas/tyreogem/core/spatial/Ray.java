@@ -21,4 +21,14 @@ public class Ray {
         return direction;
     }
 
+    public double distanceTo(Vec3d point) {
+        final Plane plane = new Plane(point, direction);
+        final Intersection intersection = plane.intersect(this);
+        if(intersection.isIntersecting()) {
+            return point.distanceTo(intersection.getIntersection());
+        } else {
+            return point.distanceTo(origin);
+        }
+    }
+
 }

@@ -20,7 +20,7 @@ public class Line {
         return new Line(pointOnLine, direction);
     }
 
-    public static Line createLineBetweenTwoPoints(Vec3d p1, Vec3d p2) {
+    public static Line createLineThroughTwoPoints(Vec3d p1, Vec3d p2) {
         return new Line(p1, p2.sub(p1));
     }
 
@@ -30,6 +30,12 @@ public class Line {
 
     public Vec3d getDirection() {
         return direction;
+    }
+
+    public double distanceTo(Vec3d point) {
+        final Plane plane = new Plane(point, direction);
+        final Intersection intersection = plane.intersect(this);
+        return point.distanceTo(intersection.getIntersection());
     }
 
 }

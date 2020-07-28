@@ -10,8 +10,11 @@ public class Line {
     private final Vec2d direction;
 
     private Line(Vec2d pointOnLine, Vec2d direction) {
+        if(direction.norm2() == 0) {
+            throw new RuntimeException("Direction must not be a null vector!");
+        }
         this.pointOnLine = pointOnLine;
-        this.direction = direction;
+        this.direction = direction.normalize();
     }
 
     public static Line createLineWithPointAndDirection(Vec2d pointOnLine, Vec2d direction) {

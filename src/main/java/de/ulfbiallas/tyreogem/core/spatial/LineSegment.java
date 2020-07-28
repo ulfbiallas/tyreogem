@@ -36,4 +36,21 @@ public class LineSegment {
         return length;
     }
 
+    public double distanceTo(Vec3d point) {
+        final Ray rayFromStart = new Ray(start, direction);
+        final Ray rayFromEnd = new Ray(end, direction.negate());
+        final Plane plane = new Plane(point, direction);
+        final Intersection intersectionWithRayFromStart = plane.intersect(rayFromStart);
+        final Intersection intersectionWithRayFromEnd = plane.intersect(rayFromEnd);
+        if(intersectionWithRayFromStart.isIntersecting()) {
+            if(intersectionWithRayFromEnd.isIntersecting()) {
+                return point.distanceTo(intersectionWithRayFromStart.getIntersection());
+            } else {
+                return point.distanceTo(end);
+            }
+        } else {
+            return point.distanceTo(start);
+        }
+    }
+
 }
