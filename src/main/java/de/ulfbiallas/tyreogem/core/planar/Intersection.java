@@ -13,8 +13,8 @@ public class Intersection {
         this.intersection = null;
     }
 
-    public Intersection(Boolean intersecting, Vec2d intersection) {
-        this.intersecting = intersecting;
+    public Intersection(Vec2d intersection) {
+        this.intersecting = true;
         this.intersection = intersection;
     }
 

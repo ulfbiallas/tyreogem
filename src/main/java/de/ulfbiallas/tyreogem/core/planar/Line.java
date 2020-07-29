@@ -40,7 +40,7 @@ public class Line {
         if(!matrix.isSingular()) {
             final Vec2d result = matrix.solve(r);
             final double lambda = result.x;
-            return new Intersection(true, pointOnLine.add(direction.scale(lambda)));
+            return new Intersection(pointOnLine.add(direction.scale(lambda)));
         }
         return new Intersection();
     }

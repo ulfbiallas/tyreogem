@@ -43,16 +43,16 @@ public class Plane {
         return new Intersection();
     }
 
-    public Intersection intersect(Ray ray) {
+    public RayIntersection intersect(Ray ray) {
         final double numerator = pointOnPlane.sub(ray.getOrigin()).dot(normal);
         final double denominator = ray.getDirection().dot(normal);
         if (denominator != 0) {
             final double lambda = numerator / denominator;
             if(lambda >= 0) {
-                return new Intersection(ray.getOrigin().add(ray.getDirection().scale(lambda)));
+                return new RayIntersection(ray.getOrigin().add(ray.getDirection().scale(lambda)), lambda);
             }
         }
-        return new Intersection();
+        return new RayIntersection();
     }
 
     /*
