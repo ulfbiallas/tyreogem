@@ -60,11 +60,15 @@ public class Plane {
      * -1 if the point is on the back side and 0 if it lies exactly on the plane.
      */
     public double getSideOfPlane(Vec3d point) {
-        return Math.signum(point.sub(pointOnPlane).dot(normal));
+        return Math.signum(signedDistanceTo(point));
     }
 
     public double distanceTo(Vec3d point) {
-        return Math.abs(point.sub(pointOnPlane).dot(normal));
+        return Math.abs(signedDistanceTo(point));
+    }
+
+    public double signedDistanceTo(Vec3d point) {
+        return point.sub(pointOnPlane).dot(normal);
     }
 
     public Vec3d getPointOnPlane() {
