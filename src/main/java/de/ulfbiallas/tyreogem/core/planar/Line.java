@@ -22,7 +22,7 @@ public class Line {
     }
 
     public static Line createLineThroughTwoPoints(Vec2d p1, Vec2d p2) {
-        return new Line(p1, p2.sub(p1).normalize());
+        return new Line(p1, p2.sub(p1));
     }
 
     public Vec2d getPointOnLine() {

@@ -21,6 +21,20 @@ public class LineSegmentTest {
     }
 
     @Test
+    public void test_getDirection() {
+        final LineSegment lineSegment = new LineSegment(new Vec3d(4, 2, -1), new Vec3d(8, 2, -1));
+        Assert.assertEquals(1.0, lineSegment.getDirection().x, 0.00001);
+        Assert.assertEquals(0.0, lineSegment.getDirection().y, 0.00001);
+        Assert.assertEquals(0.0, lineSegment.getDirection().z, 0.00001);
+    }
+
+    @Test
+    public void test_getLength() {
+        final LineSegment lineSegment = new LineSegment(new Vec3d(4, 2, -1), new Vec3d(8, 2, -1));
+        Assert.assertEquals(4.0, lineSegment.getLength(), 0.00001);
+    }
+
+    @Test
     public void test_distanceTo() {
         final double distance1 = lineSegment.distanceTo(new Vec3d(3, 4, -1));
         Assert.assertEquals(0.0, distance1, 0.00001);

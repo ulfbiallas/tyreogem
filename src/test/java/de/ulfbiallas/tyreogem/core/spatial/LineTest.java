@@ -1,5 +1,7 @@
 package de.ulfbiallas.tyreogem.core.spatial;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -23,6 +25,14 @@ public class LineTest {
     }
 
     @Test
+    public void testCreateLineWithPointAndDirection_invalidDirection() {
+        assertThatThrownBy(() -> {
+            final Vec3d direction = new Vec3d(0, 0, 0);
+            Line.createLineWithPointAndDirection(new Vec3d(5, 6, -2), direction);
+        }).hasMessage("Direction must not be a null vector!");
+    }
+
+    @Test
     public void testCreateLineThroughTwoPoints() {
         final Vec3d p1 = new Vec3d(5, -6, 3);
         final Vec3d p2 = new Vec3d(-3, 2, 1);
@@ -35,6 +45,15 @@ public class LineTest {
         Assert.assertEquals(directionNormalized.x, line.getDirection().x, 0.00001);
         Assert.assertEquals(directionNormalized.y, line.getDirection().y, 0.00001);
         Assert.assertEquals(directionNormalized.z, line.getDirection().z, 0.00001);
+    }
+
+    @Test
+    public void testCreateLineThroughTwoPoints_invalidDirection() {
+        assertThatThrownBy(() -> {
+            final Vec3d p1 = new Vec3d(5, -6, 3);
+            final Vec3d p2 = new Vec3d(5, -6, 3);
+            Line.createLineThroughTwoPoints(p1, p2);
+        }).hasMessage("Direction must not be a null vector!");
     }
 
     @Test
