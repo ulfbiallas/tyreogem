@@ -15,12 +15,25 @@ public class LineSegmentTest {
     private static final Line line = Line.createLineThroughTwoPoints(new Vec2d(-1,1), new Vec2d(1, 5));
 
     @Test
-    public void testConstructor() {
+    public void test_constructor() {
         final LineSegment lineSegment = new LineSegment(new Vec2d(5, 6), new Vec2d(3, 2));
         Assert.assertEquals(5.0, lineSegment.getStart().x, 0.00001);
         Assert.assertEquals(6.0, lineSegment.getStart().y, 0.00001);
         Assert.assertEquals(3.0, lineSegment.getEnd().x, 0.00001);
         Assert.assertEquals(2.0, lineSegment.getEnd().y, 0.00001);
+    }
+
+    @Test
+    public void test_getDirection() {
+        final LineSegment lineSegment = new LineSegment(new Vec2d(4, 2), new Vec2d(8, 2));
+        Assert.assertEquals(1.0, lineSegment.getDirection().x, 0.00001);
+        Assert.assertEquals(0.0, lineSegment.getDirection().y, 0.00001);
+    }
+
+    @Test
+    public void test_getLength() {
+        final LineSegment lineSegment = new LineSegment(new Vec2d(4, 2), new Vec2d(8, 2));
+        Assert.assertEquals(4.0, lineSegment.getLength(), 0.00001);
     }
 
     @Test

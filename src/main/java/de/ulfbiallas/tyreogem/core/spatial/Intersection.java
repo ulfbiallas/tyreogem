@@ -1,24 +1,24 @@
-package de.ulfbiallas.tyreogem.core.planar;
+package de.ulfbiallas.tyreogem.core.spatial;
 
-import de.ulfbiallas.tyreogem.core.math.Vec2d;
+import de.ulfbiallas.tyreogem.core.math.Vec3d;
 
 public class Intersection {
 
     private final boolean intersecting;
 
-    private final Vec2d intersection;
+    private final Vec3d intersection;
 
     public Intersection() {
         this.intersecting = false;
         this.intersection = null;
     }
 
-    public Intersection(Vec2d intersection) {
+    public Intersection(Vec3d intersection) {
         this.intersecting = true;
         this.intersection = intersection;
     }
 
-    public Vec2d getIntersection() {
+    public Vec3d getIntersection() {
         return intersection;
     }
 

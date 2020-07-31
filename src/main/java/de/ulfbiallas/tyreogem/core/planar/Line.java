@@ -10,8 +10,11 @@ public class Line {
     private final Vec2d direction;
 
     private Line(Vec2d pointOnLine, Vec2d direction) {
+        if(direction.norm2() == 0) {
+            throw new RuntimeException("Direction must not be a null vector!");
+        }
         this.pointOnLine = pointOnLine;
-        this.direction = direction;
+        this.direction = direction.normalize();
     }
 
     public static Line createLineWithPointAndDirection(Vec2d pointOnLine, Vec2d direction) {
@@ -19,7 +22,7 @@ public class Line {
     }
 
     public static Line createLineThroughTwoPoints(Vec2d p1, Vec2d p2) {
-        return new Line(p1, p2.sub(p1).normalize());
+        return new Line(p1, p2.sub(p1));
     }
 
     public Vec2d getPointOnLine() {
@@ -37,7 +40,7 @@ public class Line {
         if(!matrix.isSingular()) {
             final Vec2d result = matrix.solve(r);
             final double lambda = result.x;
-            return new Intersection(true, pointOnLine.add(direction.scale(lambda)));
+            return new Intersection(pointOnLine.add(direction.scale(lambda)));
         }
         return new Intersection();
     }

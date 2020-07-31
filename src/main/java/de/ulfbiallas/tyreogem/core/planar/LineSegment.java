@@ -46,7 +46,7 @@ public class LineSegment {
             final double lambda = result.x;
             final double mu = result.y;
             if(lambda >= 0 && lambda <= length && mu >= 0 && mu <= lineSegment.getLength()) {
-                return new Intersection(true, start.add(direction.scale(lambda)));
+                return new Intersection(start.add(direction.scale(lambda)));
             }
         }
         return new Intersection();
@@ -60,7 +60,7 @@ public class LineSegment {
             final Vec2d result = matrix.solve(r);
             final double lambda = result.x;
             if(lambda >= 0 && lambda <= length) {
-                return new Intersection(true, start.add(direction.scale(lambda)));
+                return new Intersection(start.add(direction.scale(lambda)));
             }
         }
         return new Intersection();

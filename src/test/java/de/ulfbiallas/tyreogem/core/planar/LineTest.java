@@ -1,5 +1,7 @@
 package de.ulfbiallas.tyreogem.core.planar;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,23 +17,43 @@ public class LineTest {
 
     @Test
     public void testCreateLineWithPointAndDirection() {
-        final Line line = Line.createLineWithPointAndDirection(new Vec2d(5, 6), new Vec2d(3, 2));
+        final Vec2d direction = new Vec2d(3, 2);
+        final Vec2d directionNormalized = direction.normalize();
+        final Line line = Line.createLineWithPointAndDirection(new Vec2d(5, 6), direction);
         Assert.assertEquals(5.0, line.getPointOnLine().x, 0.00001);
         Assert.assertEquals(6.0, line.getPointOnLine().y, 0.00001);
-        Assert.assertEquals(3, line.getDirection().x, 0.00001);
-        Assert.assertEquals(2, line.getDirection().y, 0.00001);
+        Assert.assertEquals(directionNormalized.x, line.getDirection().x, 0.00001);
+        Assert.assertEquals(directionNormalized.y, line.getDirection().y, 0.00001);
+    }
+
+    @Test
+    public void testCreateLineWithPointAndDirection_invalidDirection() {
+        assertThatThrownBy(() -> {
+            final Vec2d direction = new Vec2d(0, 0);
+            Line.createLineWithPointAndDirection(new Vec2d(5, 6), direction);
+        }).hasMessage("Direction must not be a null vector!");
     }
 
     @Test
     public void testCreateLineThroughTwoPoints() {
         final Vec2d p1 = new Vec2d(5, 6);
         final Vec2d p2 = new Vec2d(3, 2);
-        final Vec2d direction = p2.sub(p1).normalize();
+        final Vec2d direction = p2.sub(p1);
+        final Vec2d directionNormalized = direction.normalize();
         final Line line = Line.createLineThroughTwoPoints(p1, p2);
         Assert.assertEquals(5.0, line.getPointOnLine().x, 0.00001);
         Assert.assertEquals(6.0, line.getPointOnLine().y, 0.00001);
-        Assert.assertEquals(direction.x, line.getDirection().x, 0.00001);
-        Assert.assertEquals(direction.y, line.getDirection().y, 0.00001);
+        Assert.assertEquals(directionNormalized.x, line.getDirection().x, 0.00001);
+        Assert.assertEquals(directionNormalized.y, line.getDirection().y, 0.00001);
+    }
+
+    @Test
+    public void testCreateLineThroughTwoPoints_invalidDirection() {
+        assertThatThrownBy(() -> {
+            final Vec2d p1 = new Vec2d(5, 6);
+            final Vec2d p2 = new Vec2d(5, 6);
+            Line.createLineThroughTwoPoints(p1, p2);
+        }).hasMessage("Direction must not be a null vector!");
     }
 
     @Test

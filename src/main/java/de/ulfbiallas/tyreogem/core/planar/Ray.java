@@ -31,7 +31,7 @@ public class Ray {
             final double lambda = result.x;
             final double mu = result.y;
             if(lambda >= 0 && mu >= 0) {
-                return new RayIntersection(true, origin.add(direction.scale(lambda)), lambda);
+                return new RayIntersection(origin.add(direction.scale(lambda)), lambda);
             }
         }
         return new RayIntersection();
@@ -45,7 +45,7 @@ public class Ray {
             final Vec2d result = matrix.solve(r);
             final double lambda = result.x;
             if(lambda >= 0) {
-                return new RayIntersection(true, origin.add(direction.scale(lambda)), lambda);
+                return new RayIntersection(origin.add(direction.scale(lambda)), lambda);
             }
         }
         return new RayIntersection();
@@ -60,7 +60,7 @@ public class Ray {
             final double lambda = result.x;
             final double mu = result.y;
             if(lambda >= 0 && mu >= 0 && mu <= lineSegment.getLength()) {
-                return new RayIntersection(true, origin.add(direction.scale(lambda)), lambda);
+                return new RayIntersection(origin.add(direction.scale(lambda)), lambda);
             }
         }
         return new RayIntersection();

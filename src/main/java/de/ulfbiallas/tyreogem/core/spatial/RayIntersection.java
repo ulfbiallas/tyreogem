@@ -1,6 +1,6 @@
-package de.ulfbiallas.tyreogem.core.planar;
+package de.ulfbiallas.tyreogem.core.spatial;
 
-import de.ulfbiallas.tyreogem.core.math.Vec2d;
+import de.ulfbiallas.tyreogem.core.math.Vec3d;
 
 public class RayIntersection extends Intersection {
 
@@ -11,7 +11,7 @@ public class RayIntersection extends Intersection {
         this.parameter = 0;
     }
 
-    public RayIntersection(Vec2d intersection, double parameter) {
+    public RayIntersection(Vec3d intersection, double parameter) {
         super(intersection);
         this.parameter = parameter;
     }
