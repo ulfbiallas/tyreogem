@@ -1,5 +1,7 @@
 package de.ulfbiallas.tyreogem.core.spatial;
 
+import de.ulfbiallas.tyreogem.core.math.Matrix2x2d;
+import de.ulfbiallas.tyreogem.core.math.Vec2d;
 import de.ulfbiallas.tyreogem.core.math.Vec3d;
 
 public class Triangle {
@@ -37,8 +39,18 @@ public class Triangle {
         final Vec3d r2 = c.sub(a);
         final Vec3d pa = point.sub(a);
 
-        final double lambda = r1.dot(pa);
-        final double mu = r2.dot(pa);
+        final double ma = r1.dot(r1);
+        final double mb = r1.dot(r2);
+        final double mc = r2.dot(r1);
+        final double md = r2.dot(r2);
+        final double me = r1.dot(pa);
+        final double mf = r2.dot(pa);
+
+        final Matrix2x2d matrix = new Matrix2x2d(ma, mb, mc, md);
+        final Vec2d result = matrix.solve(new Vec2d(me, mf));
+
+        final double lambda = result.x;
+        final double mu = result.y;
 
         return mu >= 0 && lambda >= 0 && mu+lambda <= 1;
     }

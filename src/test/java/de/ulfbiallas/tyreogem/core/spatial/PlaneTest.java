@@ -71,20 +71,20 @@ public class PlaneTest {
     public void test_intersectionWithRay_intersecting() {
         final Plane plane = new Plane(new Vec3d(5, 3, -2), new Vec3d(1, 0, 0));
         final Ray ray = new Ray(new Vec3d(0, 4, -2), new Vec3d(1, 0, 0));
-        final RayIntersection rayIntersection = plane.intersect(ray);
-        Assert.assertTrue(rayIntersection.isIntersecting());
-        Assert.assertEquals(5.0, rayIntersection.getParameter(), 0.00001);
-        Assert.assertEquals(5.0, rayIntersection.getIntersection().x, 0.00001);
-        Assert.assertEquals(4.0, rayIntersection.getIntersection().y, 0.00001);
-        Assert.assertEquals(-2.0, rayIntersection.getIntersection().z, 0.00001);
+        final RayIntersection intersection = plane.intersect(ray);
+        Assert.assertTrue(intersection.isIntersecting());
+        Assert.assertEquals(5.0, intersection.getParameter(), 0.00001);
+        Assert.assertEquals(5.0, intersection.getIntersection().x, 0.00001);
+        Assert.assertEquals(4.0, intersection.getIntersection().y, 0.00001);
+        Assert.assertEquals(-2.0, intersection.getIntersection().z, 0.00001);
     }
 
     @Test
     public void test_intersectionWithRay_nonIntersecting() {
         final Plane plane = new Plane(new Vec3d(5, 3, -2), new Vec3d(1, 0, 0));
         final Ray ray = new Ray(new Vec3d(0, 4, -2), new Vec3d(-1, 0, 0));
-        final RayIntersection rayIntersection = plane.intersect(ray);
-        Assert.assertFalse(rayIntersection.isIntersecting());
+        final RayIntersection intersection = plane.intersect(ray);
+        Assert.assertFalse(intersection.isIntersecting());
     }
 
     @Test
