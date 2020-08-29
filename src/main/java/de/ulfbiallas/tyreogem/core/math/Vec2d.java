@@ -79,6 +79,15 @@ public class Vec2d {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if ((obj != null) && (obj instanceof Vec2d)) {
+            Vec2d v = (Vec2d) obj;
+            return v.x == this.x && v.y == this.y;
+        }
+        return false;
+    }
+
+    @Override
     public String toString() {
         return "["+ x + ", " + y + "]";
     }

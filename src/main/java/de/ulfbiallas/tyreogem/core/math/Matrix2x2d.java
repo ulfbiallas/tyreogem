@@ -108,6 +108,15 @@ public class Matrix2x2d {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if ((obj != null) && (obj instanceof Matrix2x2d)) {
+            Matrix2x2d m = (Matrix2x2d) obj;
+            return m.a == this.a && m.b == this.b && m.c == this.c && m.d == this.d;
+        }
+        return false;
+    }
+
+    @Override
     public String toString() {
         return "[" + a + "," + b + ";" + c + "," + d + "]";
     }

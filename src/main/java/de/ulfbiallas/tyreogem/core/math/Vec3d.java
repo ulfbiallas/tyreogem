@@ -87,6 +87,15 @@ public class Vec3d {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if ((obj != null) && (obj instanceof Vec3d)) {
+            Vec3d v = (Vec3d) obj;
+            return v.x == this.x && v.y == this.y && v.z == this.z;
+        }
+        return false;
+    }
+
+    @Override
     public String toString() {
         return "["+ x + ", " + y + ", " + z+"]";
     }
