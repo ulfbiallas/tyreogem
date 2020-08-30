@@ -1,11 +1,9 @@
-package de.ulfbiallas.tyreogem.mesh.obj;
+package de.ulfbiallas.tyreogem.mesh.io.obj;
 
 import java.io.File;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import de.ulfbiallas.tyreogem.mesh.io.obj.ObjFileDescriptor;
 
 public class ObjFileDescriptorTest {
 

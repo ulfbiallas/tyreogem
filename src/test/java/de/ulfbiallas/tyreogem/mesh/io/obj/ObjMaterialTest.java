@@ -1,4 +1,4 @@
-package de.ulfbiallas.tyreogem.mesh.obj;
+package de.ulfbiallas.tyreogem.mesh.io.obj;
 
 import java.io.File;
 
@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import de.ulfbiallas.tyreogem.core.math.Vec3d;
 import de.ulfbiallas.tyreogem.mesh.Material;
-import de.ulfbiallas.tyreogem.mesh.io.obj.ObjMaterial;
 
 public class ObjMaterialTest {
 

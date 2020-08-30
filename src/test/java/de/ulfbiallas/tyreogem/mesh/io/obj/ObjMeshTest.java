@@ -1,4 +1,4 @@
-package de.ulfbiallas.tyreogem.mesh.obj;
+package de.ulfbiallas.tyreogem.mesh.io.obj;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -6,7 +6,6 @@ import org.junit.Test;
 import de.ulfbiallas.tyreogem.core.math.Vec3d;
 import de.ulfbiallas.tyreogem.mesh.Mesh;
 import de.ulfbiallas.tyreogem.mesh.MeshBuilder;
-import de.ulfbiallas.tyreogem.mesh.io.obj.ObjMesh;
 
 public class ObjMeshTest {
 

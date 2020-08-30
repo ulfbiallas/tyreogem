@@ -1,13 +1,9 @@
-package de.ulfbiallas.tyreogem.mesh.obj;
+package de.ulfbiallas.tyreogem.mesh.io.obj;
 
 import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import de.ulfbiallas.tyreogem.mesh.io.obj.ObjFace;
-import de.ulfbiallas.tyreogem.mesh.io.obj.ObjFaceIndex;
-import de.ulfbiallas.tyreogem.mesh.io.obj.ObjMaterial;
 
 public class ObjFaceTest {
 
