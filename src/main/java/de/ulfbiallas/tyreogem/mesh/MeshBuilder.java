@@ -1,8 +1,10 @@
 package de.ulfbiallas.tyreogem.mesh;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import de.ulfbiallas.tyreogem.core.math.Vec3d;
 
@@ -65,6 +67,36 @@ public class MeshBuilder {
         ));
 
         final List<Face> faces = Arrays.asList(bottom, top, left, right, front, back);
+
+        return new Mesh(points, faces);
+    }
+
+    public static Mesh createCylinder(double radius, double height, int segments) {
+        final int n = segments < 3 ? 3 : segments;
+        final double h = 0.5 * height;
+
+        final List<Vec3d> points = new ArrayList<>();
+        for(int k=0; k<segments; ++k) {
+            points.add(new Vec3d(Math.cos(k * 2 * Math.PI / n) * radius, -h, Math.sin(k * 2 * Math.PI / n) * radius));
+        }
+        for(int k=0; k<segments; ++k) {
+            points.add(new Vec3d(Math.cos(k * 2 * Math.PI / n) * radius, h, Math.sin(k * 2 * Math.PI / n) * radius));
+        }
+
+        final List<Face> faces = new ArrayList<>();
+        for(int k=0; k<segments; ++k) {
+            final int s0 = k;
+            final int s1 = k < segments-1 ? k+1 : 0;
+            faces.add(new Face(Arrays.asList(
+                    new Vertex(s0, null, null),
+                    new Vertex(s1, null, null),
+                    new Vertex(s1+n, null, null),
+                    new Vertex(s0+n, null, null)
+            )));
+        }
+
+        faces.add(new Face(IntStream.range(0, n).boxed().map(i -> new Vertex(i, null, null)).collect(Collectors.toList())).reverseWinding());
+        faces.add(new Face(IntStream.range(n, 2*n).boxed().map(i -> new Vertex(i, null, null)).collect(Collectors.toList())));
 
         return new Mesh(points, faces);
     }
