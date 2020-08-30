@@ -87,4 +87,16 @@ public class Material {
         return map_Ka != null || map_Kd != null || map_d != null;
     }
 
+    public Material clone() {
+        final Material material = new Material();
+        material.setName(name);
+        material.setKa(Ka);
+        material.setKd(Kd);
+        material.setKs(Ks);
+        material.setMap_Ka(map_Ka);
+        material.setMap_Kd(map_Kd);
+        material.setMap_d(map_d);
+        material.setShininess(shininess);
+        return material;
+    }
 }

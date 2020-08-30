@@ -35,4 +35,19 @@ public class FaceTest {
         Assert.assertEquals(vertex2, face.getVertices().get(1));
         Assert.assertNull(face.getMaterial());
     }
+
+    @Test
+    public void test_reverseWinding() {
+        Vertex vertex0 = new Vertex(0, new Vec3d(0.0, 1.0, 0.0), new Vec2d(0.0, 0.0));
+        Vertex vertex1 = new Vertex(1, new Vec3d(0.0, 1.0, 0.0), new Vec2d(1.0, 0.0));
+        Vertex vertex2 = new Vertex(2, new Vec3d(0.0, 1.0, 0.0), new Vec2d(1.0, 1.0));
+        Vertex vertex3 = new Vertex(3, new Vec3d(0.0, 1.0, 0.0), new Vec2d(0.0, 1.0));
+
+        Face face = new Face(Arrays.asList(vertex0, vertex1, vertex2, vertex3));
+        Face faceWithReversedWinding = face.reverseWinding();
+        Assert.assertEquals(vertex3, faceWithReversedWinding.getVertices().get(0));
+        Assert.assertEquals(vertex2, faceWithReversedWinding.getVertices().get(1));
+        Assert.assertEquals(vertex1, faceWithReversedWinding.getVertices().get(2));
+        Assert.assertEquals(vertex0, faceWithReversedWinding.getVertices().get(3));
+    }
 }
