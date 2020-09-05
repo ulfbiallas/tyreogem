@@ -55,10 +55,11 @@ public class ObjExporter implements Exporter {
             mtlFileBuilder.append(createMtlLine("Kd", material.getKd()));
             mtlFileBuilder.append(createMtlLine("Ks", material.getKs()));
             mtlFileBuilder.append(createMtlLine("d", material.getD()));
+            mtlFileBuilder.append(createMtlLine("sharpness", material.getSharpness()));
             mtlFileBuilder.append(createMtlLine("illum", material.getIllum()));
             mtlFileBuilder.append(createMtlLine("map_Ka", material.getMap_Ka()));
             mtlFileBuilder.append(createMtlLine("map_Kd", material.getMap_Kd()));
-            // TODO: export other values as well if present
+            mtlFileBuilder.append(createMtlLine("map_d", material.getMap_d()));
             mtlFileBuilder.append("\n");
         }
 

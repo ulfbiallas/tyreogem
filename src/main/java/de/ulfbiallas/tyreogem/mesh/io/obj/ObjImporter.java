@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+
 import de.ulfbiallas.tyreogem.core.math.Vec2d;
 import de.ulfbiallas.tyreogem.core.math.Vec3d;
 import de.ulfbiallas.tyreogem.mesh.Mesh;
@@ -270,12 +272,9 @@ public class ObjImporter implements Importer {
             ? Integer.parseInt(faceIndex.split("/")[1]) - 1
             : null;
 
-            /*// TODO import org.apache.commons.lang3.StringUtils;
         final Integer vertexNormalIndex = StringUtils.countMatches(faceIndex, "/") == 2
             ? Integer.parseInt(faceIndex.split("/")[2]) - 1
             : null;
-            */
-            final Integer vertexNormalIndex = null;
 
         return new ObjFaceIndex(vertexIndex, textureCoordinatesIndex, vertexNormalIndex);
     }
