@@ -14,6 +14,14 @@ public class ObjFileDescriptor {
         this.fileName = fileName;
     }
 
+    public ObjFileDescriptor(File directory, String fileName) {
+        if(!directory.isDirectory()) {
+            throw new IllegalArgumentException("Argument does not specify a directory!");
+        }
+        this.directoryPath = directory.getAbsolutePath();
+        this.fileName = fileName;
+    }
+
     public ObjFileDescriptor(File file) {
         this.directoryPath = file.getParentFile().getAbsolutePath() + "\\";
         final String fullFileName = file.getName();
@@ -34,10 +42,10 @@ public class ObjFileDescriptor {
     }
 
     public File getObjFile() {
-        return new File(directoryPath + fileName + ".obj");
+        return new File(directoryPath, fileName + ".obj");
     }
 
     public File getMtlFile() {
-        return new File(directoryPath + fileName + ".mtl");
+        return new File(directoryPath, fileName + ".mtl");
     }
 }

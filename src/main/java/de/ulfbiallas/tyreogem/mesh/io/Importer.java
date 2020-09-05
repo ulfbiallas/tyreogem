@@ -6,6 +6,6 @@ import de.ulfbiallas.tyreogem.mesh.Mesh;
 
 public interface Importer {
 
-    Mesh importMesh(File file);
+    Mesh importMesh(File directory, String fileName);
 
 }

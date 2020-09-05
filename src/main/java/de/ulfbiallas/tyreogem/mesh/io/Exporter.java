@@ -6,6 +6,6 @@ import de.ulfbiallas.tyreogem.mesh.Mesh;
 
 public interface Exporter {
 
-    void exportMesh(Mesh mesh, File file);
+    void exportMesh(Mesh mesh, File directory, String fileName);
 
 }

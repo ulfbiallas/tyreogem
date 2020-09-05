@@ -19,8 +19,8 @@ import de.ulfbiallas.tyreogem.mesh.io.Importer;
 public class ObjImporter implements Importer {
 
     @Override
-    public Mesh importMesh(File file) {
-        final ObjFileDescriptor descriptor = new ObjFileDescriptor(file);
+    public Mesh importMesh(File directory, String fileName) {
+        final ObjFileDescriptor descriptor = new ObjFileDescriptor(directory, fileName);
         final ObjMesh objMesh = importObj(descriptor);
         return objMesh.toMesh();
     }

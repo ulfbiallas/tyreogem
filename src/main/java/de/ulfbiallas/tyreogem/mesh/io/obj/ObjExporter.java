@@ -17,21 +17,18 @@ import de.ulfbiallas.tyreogem.mesh.io.Exporter;
 public class ObjExporter implements Exporter {
 
     @Override
-    public void exportMesh(Mesh mesh, File file) {
+    public void exportMesh(Mesh mesh, File directory, String fileName) {
         try {
-            exportObj(new ObjMesh(mesh), file);
+            exportObj(new ObjMesh(mesh), directory, fileName);
         } catch (IOException e) {
             throw new RuntimeException("Mesh could not be exported to OBJ/MTL!", e);
         }
     }
 
-    public String getFileNameSuffix() {
-        return "obj";
-    }
-
-    public void exportObj(ObjMesh objMesh, File fileToExport) throws IOException {
-        writeObjFile(objMesh, fileToExport);
-        writeMtlFile(objMesh, fileToExport);
+    public void exportObj(ObjMesh objMesh, File directory, String fileName) throws IOException {
+        final ObjFileDescriptor descriptor = new ObjFileDescriptor(directory, fileName);
+        writeObjFile(objMesh, descriptor.getObjFile());
+        writeMtlFile(objMesh, descriptor.getMtlFile());
     }
 
     private String createMtlLine(String name, Vec3d value) {
@@ -50,13 +47,7 @@ public class ObjExporter implements Exporter {
         return name + " " + value +"\n";
     }
 
-    private void writeMtlFile(ObjMesh objMesh, File objFile) throws IOException {
-        final String objPath = objFile.getAbsolutePath();
-        final int lastIndexOfObjSuffix = objPath.lastIndexOf(getFileNameSuffix());
-        final String objPathWithoutSuffix = objPath.substring(0, lastIndexOfObjSuffix);
-        final String mtlPath = objPathWithoutSuffix + "mtl";
-        final File mtlFile = new File(mtlPath);
-
+    private void writeMtlFile(ObjMesh objMesh, File mtlFile) throws IOException {
         final StringBuilder mtlFileBuilder = new StringBuilder();
         for(ObjMaterial material: objMesh.getMaterials().values()) {
             mtlFileBuilder.append("newmtl " + material.getName() + "\n");
