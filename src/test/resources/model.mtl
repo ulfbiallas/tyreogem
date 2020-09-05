@@ -5,7 +5,6 @@ Ks 0.5 0.5 0.5
 d 0.0
 sharpness 0.4
 illum 0
-map_Ka C:\repos\tyreogem\map_Ka.png
-map_Kd C:\repos\tyreogem\map_Kd.png
-map_d C:\repos\tyreogem\map_d.png
-
+map_Ka map_Ka.png
+map_Kd map_Kd.png
+map_d map_d.png

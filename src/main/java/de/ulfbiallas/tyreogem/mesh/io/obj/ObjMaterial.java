@@ -164,9 +164,9 @@ public class ObjMaterial {
         material.setKd(Kd);
         material.setKs(Ks);
         material.setShininess(sharpness);
-        material.setMap_Ka(map_Ka != null ? new File(directory + map_Ka) : null);
-        material.setMap_Kd(map_Kd != null ? new File(directory + map_Kd) : null);
-        material.setMap_d(map_d != null ? new File(directory + map_d) : null);
+        material.setMap_Ka(map_Ka != null ? new File(directory, map_Ka) : null);
+        material.setMap_Kd(map_Kd != null ? new File(directory, map_Kd) : null);
+        material.setMap_d(map_d != null ? new File(directory, map_d) : null);
         return material;
     }
 
