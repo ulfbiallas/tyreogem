@@ -3,6 +3,7 @@ package de.ulfbiallas.tyreogem.mesh.io.obj;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -27,8 +28,12 @@ public class ObjExporter implements Exporter {
 
     public void exportObj(ObjMesh objMesh, File directory, String fileName) throws IOException {
         final ObjFileDescriptor descriptor = new ObjFileDescriptor(directory, fileName);
-        writeObjFile(objMesh, descriptor.getObjFile());
-        writeMtlFile(objMesh, descriptor.getMtlFile());
+
+        final FileWriter objFileWriter = new FileWriter(descriptor.getObjFile());
+        writeObjFile(objMesh, objFileWriter);
+
+        final FileWriter mtlFileWriter = new FileWriter(descriptor.getMtlFile());
+        writeMtlFile(objMesh, mtlFileWriter);
     }
 
     private String createMtlLine(String name, Vec3d value) {
@@ -47,7 +52,7 @@ public class ObjExporter implements Exporter {
         return name + " " + value +"\n";
     }
 
-    private void writeMtlFile(ObjMesh objMesh, File mtlFile) throws IOException {
+    public void writeMtlFile(ObjMesh objMesh, Writer writer) throws IOException {
         final StringBuilder mtlFileBuilder = new StringBuilder();
         for(ObjMaterial material: objMesh.getMaterials().values()) {
             mtlFileBuilder.append("newmtl " + material.getName() + "\n");
@@ -63,29 +68,27 @@ public class ObjExporter implements Exporter {
             mtlFileBuilder.append("\n");
         }
 
-        final FileWriter fileWriter = new FileWriter(mtlFile);
         try {
-            fileWriter.write(mtlFileBuilder.toString());
+            writer.write(mtlFileBuilder.toString());
         } finally {
-            fileWriter.flush();
-            fileWriter.close();
+            writer.flush();
+            writer.close();
         }
     }
 
-    private void writeObjFile(ObjMesh mesh, File fileToExport) throws IOException {
-        final FileWriter fileWriter = new FileWriter(fileToExport);
+    public void writeObjFile(ObjMesh mesh, Writer writer) throws IOException {
         try {
 
             for(Vec3d v: mesh.getVertices()) {
-                fileWriter.write("v " + v.x + " " + v.y + " " + v.z + "\n");
+                writer.write("v " + v.x + " " + v.y + " " + v.z + "\n");
             }
 
             for(Vec2d uv: mesh.getTextureCoordinates()) {
-                fileWriter.write("vt " + uv.x + " " + uv.y + "\n");
+                writer.write("vt " + uv.x + " " + uv.y + "\n");
             }
 
             for(Vec3d n: mesh.getVertexNormals()) {
-                fileWriter.write("vn " + n.x + " " + n.y + " " + n.z + "\n");
+                writer.write("vn " + n.x + " " + n.y + " " + n.z + "\n");
             }
 
             final Map<String, List<ObjFace>> facesByMaterialName = mesh.getFaces().stream().collect(Collectors.groupingBy(ObjFace::getMaterialName));
@@ -93,7 +96,7 @@ public class ObjExporter implements Exporter {
             final List<String> materialNames =  Stream.concat(mesh.getMaterials().keySet().stream(), Arrays.asList(ObjMaterial.NO_MATERIAL).stream()).collect(Collectors.toList());
             for(String materialName: materialNames) {
                 if(!materialName.equals(ObjMaterial.NO_MATERIAL)) {
-                    fileWriter.write("usemtl " + materialName + "\n");
+                    writer.write("usemtl " + materialName + "\n");
                 }
                 if(facesByMaterialName.containsKey(materialName)) {
                     for(ObjFace face: facesByMaterialName.get(materialName)) {
@@ -108,14 +111,14 @@ public class ObjExporter implements Exporter {
                             faceString.append(" ");
                         }
                         faceString.append("\n");
-                        fileWriter.write(faceString.toString());
+                        writer.write(faceString.toString());
                     }
                 }
             }
 
         } finally {
-            fileWriter.flush();
-            fileWriter.close();
+            writer.flush();
+            writer.close();
         }
     }
 

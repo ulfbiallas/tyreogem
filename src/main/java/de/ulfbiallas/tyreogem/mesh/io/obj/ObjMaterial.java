@@ -41,9 +41,9 @@ public class ObjMaterial {
         this.Kd = material.getKd();
         this.Ks = material.getKs();
         this.sharpness = material.getShininess();
-        this.map_Ka = material.getMap_Ka() != null ? material.getMap_Ka().getAbsolutePath() : null;
-        this.map_Kd = material.getMap_Kd() != null ? material.getMap_Kd().getAbsolutePath() : null;
-        this.map_d = material.getMap_d() != null ? material.getMap_d().getAbsolutePath() : null;
+        this.map_Ka = material.getMap_Ka() != null ? material.getMap_Ka().getName() : null;
+        this.map_Kd = material.getMap_Kd() != null ? material.getMap_Kd().getName() : null;
+        this.map_d = material.getMap_d() != null ? material.getMap_d().getName() : null;
     }
 
     public String getDirectory() {

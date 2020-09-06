@@ -1,6 +1,7 @@
 package de.ulfbiallas.tyreogem.mesh.io.obj;
 
 import java.io.File;
+import java.net.URISyntaxException;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,9 +14,9 @@ import de.ulfbiallas.tyreogem.mesh.Mesh;
 public class ObjImporterTest {
 
     @Test
-    public void test_importMesh() {
+    public void test_importMesh() throws URISyntaxException {
         final ObjImporter importer = new ObjImporter();
-        final Mesh mesh = importer.importMesh(new File("src/test/resources"), "model");
+        final Mesh mesh = importer.importMesh(getDirectory(), "model");
 
         Assert.assertEquals(4, mesh.getPoints().size());
         Assert.assertEquals(new Vec3d(0.0, 0.0, 0.0), mesh.getPoints().get(0));
@@ -47,9 +48,9 @@ public class ObjImporterTest {
     }
 
     @Test
-    public void test_importMesh_withTextureCoordinates() {
+    public void test_importMesh_withTextureCoordinates() throws URISyntaxException {
         final ObjImporter importer = new ObjImporter();
-        final Mesh mesh = importer.importMesh(new File("src/test/resources"), "model-with-textureCoordinates");
+        final Mesh mesh = importer.importMesh(getDirectory(), "model-with-textureCoordinates");
 
         Assert.assertEquals(4, mesh.getPoints().size());
         Assert.assertEquals(new Vec3d(0.0, 0.0, 0.0), mesh.getPoints().get(0));
@@ -81,9 +82,9 @@ public class ObjImporterTest {
     }
 
     @Test
-    public void test_importMesh_withNormals() {
+    public void test_importMesh_withNormals() throws URISyntaxException {
         final ObjImporter importer = new ObjImporter();
-        final Mesh mesh = importer.importMesh(new File("src/test/resources"), "model-with-normals");
+        final Mesh mesh = importer.importMesh(getDirectory(), "model-with-normals");
 
         Assert.assertEquals(4, mesh.getPoints().size());
         Assert.assertEquals(new Vec3d(0.0, 0.0, 0.0), mesh.getPoints().get(0));
@@ -115,9 +116,9 @@ public class ObjImporterTest {
     }
 
     @Test
-    public void test_importMesh_withTextureCoordinatesAndNormals() {
+    public void test_importMesh_withTextureCoordinatesAndNormals() throws URISyntaxException {
         final ObjImporter importer = new ObjImporter();
-        final Mesh mesh = importer.importMesh(new File("src/test/resources"), "model-with-textureCoordinates-and-normals");
+        final Mesh mesh = importer.importMesh(getDirectory(), "model-with-textureCoordinates-and-normals");
 
         Assert.assertEquals(4, mesh.getPoints().size());
         Assert.assertEquals(new Vec3d(0.0, 0.0, 0.0), mesh.getPoints().get(0));
@@ -147,4 +148,9 @@ public class ObjImporterTest {
         Assert.assertEquals("map_d.png", material.getMap_d().getName());
         Assert.assertEquals(0.4, material.getShininess(), 0.00001);
     }
+
+    private File getDirectory() throws URISyntaxException {
+        return new File(this.getClass().getClassLoader().getResource("obj").toURI());
+    }
+
 }
