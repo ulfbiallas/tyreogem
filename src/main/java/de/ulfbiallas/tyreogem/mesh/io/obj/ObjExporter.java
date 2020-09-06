@@ -80,12 +80,12 @@ public class ObjExporter implements Exporter {
                 fileWriter.write("v " + v.x + " " + v.y + " " + v.z + "\n");
             }
 
-            for(Vec3d n: mesh.getVertexNormals()) {
-                fileWriter.write("vn " + n.x + " " + n.y + " " + n.z + "\n");
-            }
-
             for(Vec2d uv: mesh.getTextureCoordinates()) {
                 fileWriter.write("vt " + uv.x + " " + uv.y + "\n");
+            }
+
+            for(Vec3d n: mesh.getVertexNormals()) {
+                fileWriter.write("vn " + n.x + " " + n.y + " " + n.z + "\n");
             }
 
             final Map<String, List<ObjFace>> facesByMaterialName = mesh.getFaces().stream().collect(Collectors.groupingBy(ObjFace::getMaterialName));

@@ -28,8 +28,8 @@ public class ObjImporter implements Importer {
     }
 
     public static ObjMesh importObj(ObjFileDescriptor objFileDescriptor) {
-        File objFile = objFileDescriptor.getObjFile();
-        File mtlFile = objFileDescriptor.getMtlFile();
+        final File objFile = objFileDescriptor.getObjFile();
+        final File mtlFile = objFileDescriptor.getMtlFile();
 
         String lineRaw;
         String materialName = null;
@@ -268,13 +268,21 @@ public class ObjImporter implements Importer {
             ? Integer.parseInt(faceIndex.split("/")[0]) - 1
             : Integer.parseInt(faceIndex) - 1;
 
-        final Integer textureCoordinatesIndex = faceIndex.contains("/")
-            ? Integer.parseInt(faceIndex.split("/")[1]) - 1
-            : null;
+        Integer textureCoordinatesIndex = null;
+        if(faceIndex.contains("/")) {
+            String str = faceIndex.split("/")[1];
+            if(str.length() > 0) {
+                textureCoordinatesIndex = Integer.parseInt(str) - 1;
+            }
+        }
 
-        final Integer vertexNormalIndex = StringUtils.countMatches(faceIndex, "/") == 2
-            ? Integer.parseInt(faceIndex.split("/")[2]) - 1
-            : null;
+        Integer vertexNormalIndex = null;
+        if(StringUtils.countMatches(faceIndex, "/") == 2) {
+            String str = faceIndex.split("/")[2];
+            if(str.length() > 0) {
+                vertexNormalIndex = Integer.parseInt(str) - 1;
+            }
+        }
 
         return new ObjFaceIndex(vertexIndex, textureCoordinatesIndex, vertexNormalIndex);
     }
