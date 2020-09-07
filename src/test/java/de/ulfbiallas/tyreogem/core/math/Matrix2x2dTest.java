@@ -161,4 +161,20 @@ public class Matrix2x2dTest {
         Assert.assertEquals(2.0, d, 0.00001);
     }
 
+    @Test
+    public void testEquals() {
+        Matrix2x2d m1 = new Matrix2x2d(-3.0, 2.0, 4.0, 1.0);
+        Matrix2x2d m2 = new Matrix2x2d(-3.0, 2.0, 4.0, 1.0);
+        Assert.assertEquals(m1, m1);
+        Assert.assertEquals(m2, m2);
+        Assert.assertEquals(m1, m2);
+
+        Matrix2x2d m1b = new Matrix2x2d(-3.0, 2.0, 4.00001, 1.0);
+        Matrix2x2d m2b = new Matrix2x2d(-3.000001, 2.0, 4.0, 1.0);
+        Assert.assertEquals(m1b, m1b);
+        Assert.assertEquals(m2b, m2b);
+        Assert.assertNotEquals(m1b, m2b);
+        Assert.assertNotEquals(m1, m1b);
+        Assert.assertNotEquals(m2, m2b);
+    }
 }

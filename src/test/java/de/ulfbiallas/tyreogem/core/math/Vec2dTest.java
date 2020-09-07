@@ -145,4 +145,21 @@ public class Vec2dTest {
         double distance = point.sub(v).norm();
         Assert.assertEquals(v.distanceTo(point), distance, 0.00001);
     }
+
+    @Test
+    public void testEquals() {
+        Vec2d v1 = new Vec2d(-3.0, 4.0);
+        Vec2d v2 = new Vec2d(-3.0, 4.0);
+        Assert.assertEquals(v1, v1);
+        Assert.assertEquals(v2, v2);
+        Assert.assertEquals(v1, v2);
+
+        Vec2d v1b = new Vec2d(-3.0, 4.00001);
+        Vec2d v2b = new Vec2d(-3.000001, 4.0);
+        Assert.assertEquals(v1b, v1b);
+        Assert.assertEquals(v2b, v2b);
+        Assert.assertNotEquals(v1b, v2b);
+        Assert.assertNotEquals(v1, v1b);
+        Assert.assertNotEquals(v2, v2b);
+    }
 }

@@ -4,11 +4,11 @@ import java.util.List;
 
 public class Vec3d {
 
-    public double x;
+    public final double x;
 
-    public double y;
+    public final double y;
 
-    public double z;
+    public final double z;
 
     public static Vec3d zero() {
         return new Vec3d(0.0, 0.0, 0.0);
@@ -84,6 +84,15 @@ public class Vec3d {
 
     public double[] toArray() {
         return new double[]{x, y, z};
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if ((obj != null) && (obj instanceof Vec3d)) {
+            Vec3d v = (Vec3d) obj;
+            return v.x == this.x && v.y == this.y && v.z == this.z;
+        }
+        return false;
     }
 
     @Override
