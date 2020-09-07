@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -41,7 +43,8 @@ public class ObjExporter implements Exporter {
     }
 
     private String createMtlLine(String name, double value) {
-        return name + " " + value +"\n";
+        final String roundedValue = formatDouble(value);
+        return name + " " + roundedValue +"\n";
     }
 
     private String createMtlLine(String name, int value) {
@@ -80,7 +83,10 @@ public class ObjExporter implements Exporter {
         try {
 
             for(Vec3d v: mesh.getVertices()) {
-                writer.write("v " + v.x + " " + v.y + " " + v.z + "\n");
+                final String roundedX = formatDouble(v.x);
+                final String roundedY = formatDouble(v.y);
+                final String roundedZ = formatDouble(v.z);
+                writer.write("v " + roundedX + " " + roundedY + " " + roundedZ + "\n");
             }
 
             for(Vec2d uv: mesh.getTextureCoordinates()) {
@@ -101,14 +107,18 @@ public class ObjExporter implements Exporter {
                 if(facesByMaterialName.containsKey(materialName)) {
                     for(ObjFace face: facesByMaterialName.get(materialName)) {
                         StringBuilder faceString = new StringBuilder();
-                        faceString.append("f ");
+                        faceString.append("f");
                         for(ObjFaceIndex fi: face.getIndices()) {
-                            faceString.append(createObjIndex(fi.getVertexIndex()));
-                            faceString.append("/");
-                            faceString.append(createObjIndex(fi.getTextureCoordinatesIndex()));
-                            faceString.append("/");
-                            faceString.append(createObjIndex(fi.getVertexNormalIndex()));
                             faceString.append(" ");
+                            faceString.append(createObjIndex(fi.getVertexIndex()));
+                            if(fi.getTextureCoordinatesIndex() != null || fi.getVertexNormalIndex() != null) {
+                                faceString.append("/");
+                                faceString.append(createObjIndex(fi.getTextureCoordinatesIndex()));
+                                if(fi.getVertexNormalIndex() != null) {
+                                    faceString.append("/");
+                                    faceString.append(createObjIndex(fi.getVertexNormalIndex()));
+                                }
+                            }
                         }
                         faceString.append("\n");
                         writer.write(faceString.toString());
@@ -120,6 +130,14 @@ public class ObjExporter implements Exporter {
             writer.flush();
             writer.close();
         }
+    }
+
+    private String formatDouble(double value) {
+        NumberFormat formatter = NumberFormat.getNumberInstance(Locale.ROOT);
+        formatter.setMinimumFractionDigits(1);
+        formatter.setMaximumFractionDigits(3);
+        return formatter.format(value);
+        //return String.format(Locale.US, "%.3f", value);
     }
 
     private String createObjIndex(Integer vertexIndex) {
