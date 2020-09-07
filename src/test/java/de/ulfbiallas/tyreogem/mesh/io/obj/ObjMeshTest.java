@@ -27,11 +27,10 @@ public class ObjMeshTest {
 
         Assert.assertEquals(6, objMesh.getFaces().size());
         Assert.assertEquals(4, objMesh.getFaces().get(0).getIndices().size());
-        Assert.assertEquals(3, objMesh.getFaces().get(0).getIndices().get(0).getVertexIndex().intValue());
-        Assert.assertEquals(2, objMesh.getFaces().get(0).getIndices().get(1).getVertexIndex().intValue());
-        Assert.assertEquals(1, objMesh.getFaces().get(0).getIndices().get(2).getVertexIndex().intValue());
-        Assert.assertEquals(0, objMesh.getFaces().get(0).getIndices().get(3).getVertexIndex().intValue());
+        Assert.assertEquals(0, objMesh.getFaces().get(0).getIndices().get(0).getVertexIndex().intValue());
+        Assert.assertEquals(1, objMesh.getFaces().get(0).getIndices().get(1).getVertexIndex().intValue());
+        Assert.assertEquals(2, objMesh.getFaces().get(0).getIndices().get(2).getVertexIndex().intValue());
+        Assert.assertEquals(3, objMesh.getFaces().get(0).getIndices().get(3).getVertexIndex().intValue());
     }
 
-    
 }

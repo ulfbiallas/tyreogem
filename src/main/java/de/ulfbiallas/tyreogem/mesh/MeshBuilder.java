@@ -31,22 +31,22 @@ public class MeshBuilder {
                 final int s1 = k < vn-1 ? k+1 : 0;
                 if(h==0) {
                     faces.add(new Face(Arrays.asList(
-                            new Vertex(0, null, null),
+                            new Vertex(1+s0, null, null),
                             new Vertex(1+s1, null, null),
-                            new Vertex(1+s0, null, null)
+                            new Vertex(0, null, null)
                     )));
                 } else if(h==hn-1) {
                     faces.add(new Face(Arrays.asList(
-                            new Vertex(1+(h-1)*vn+s0, null, null),
+                            new Vertex(points.size()-1, null, null),
                             new Vertex(1+(h-1)*vn+s1, null, null),
-                            new Vertex(points.size()-1, null, null)
+                            new Vertex(1+(h-1)*vn+s0, null, null)
                     )));
                 } else {
                     faces.add(new Face(Arrays.asList(
-                            new Vertex(1+(h-1)*vn+s0, null, null),
-                            new Vertex(1+(h-1)*vn+s1, null, null),
+                            new Vertex(1+h*vn+s0, null, null),
                             new Vertex(1+h*vn+s1, null, null),
-                            new Vertex(1+h*vn+s0, null, null)
+                            new Vertex(1+(h-1)*vn+s1, null, null),
+                            new Vertex(1+(h-1)*vn+s0, null, null)
                     )));
                 }
             }
@@ -70,45 +70,45 @@ public class MeshBuilder {
         final List<Vec3d> points = offsets.stream().map(o -> o.add(position)).collect(Collectors.toList());
 
         final Face bottom = new Face(Arrays.asList(  //
-            new Vertex(3, new Vec3d(0, -1, 0), null), //
-            new Vertex(2, new Vec3d(0, -1, 0), null), //
+            new Vertex(0, new Vec3d(0, -1, 0), null), //
             new Vertex(1, new Vec3d(0, -1, 0), null), //
-            new Vertex(0, new Vec3d(0, -1, 0), null) //
+            new Vertex(2, new Vec3d(0, -1, 0), null), //
+            new Vertex(3, new Vec3d(0, -1, 0), null) //
         ));
 
         final Face top = new Face(Arrays.asList( //
-            new Vertex(4, new Vec3d(0, 1, 0), null), //
-            new Vertex(5, new Vec3d(0, 1, 0), null), //
+            new Vertex(7, new Vec3d(0, 1, 0), null), //
             new Vertex(6, new Vec3d(0, 1, 0), null), //
-            new Vertex(7, new Vec3d(0, 1, 0), null) //
+            new Vertex(5, new Vec3d(0, 1, 0), null), //
+            new Vertex(4, new Vec3d(0, 1, 0), null) //
         ));
 
         final Face left = new Face(Arrays.asList( //
-            new Vertex(7, new Vec3d(-1, 0, 0), null), //
-            new Vertex(3, new Vec3d(-1, 0, 0), null), //
+            new Vertex(4, new Vec3d(-1, 0, 0), null), //
             new Vertex(0, new Vec3d(-1, 0, 0), null), //
-            new Vertex(4, new Vec3d(-1, 0, 0), null) //
+            new Vertex(3, new Vec3d(-1, 0, 0), null), //
+            new Vertex(7, new Vec3d(-1, 0, 0), null) //
         ));
 
         final Face right = new Face(Arrays.asList( //
-            new Vertex(5, new Vec3d(1, 0, 0), null), //
-            new Vertex(1, new Vec3d(1, 0, 0), null), //
+            new Vertex(6, new Vec3d(1, 0, 0), null), //
             new Vertex(2, new Vec3d(1, 0, 0), null), //
-            new Vertex(6, new Vec3d(1, 0, 0), null) //
+            new Vertex(1, new Vec3d(1, 0, 0), null), //
+            new Vertex(5, new Vec3d(1, 0, 0), null) //
         ));
 
         final Face front = new Face(Arrays.asList( //
-            new Vertex(0, new Vec3d(0, 0, -1), null), //
-            new Vertex(1, new Vec3d(0, 0, -1), null), //
+            new Vertex(4, new Vec3d(0, 0, -1), null), //
             new Vertex(5, new Vec3d(0, 0, -1), null), //
-            new Vertex(4, new Vec3d(0, 0, -1), null) //
+            new Vertex(1, new Vec3d(0, 0, -1), null), //
+            new Vertex(0, new Vec3d(0, 0, -1), null) //
         ));
 
         final Face back = new Face(Arrays.asList( //
-            new Vertex(2, new Vec3d(0, 0, 1), null), //
-            new Vertex(3, new Vec3d(0, 0, 1), null), //
+            new Vertex(6, new Vec3d(0, 0, 1), null), //
             new Vertex(7, new Vec3d(0, 0, 1), null), //
-            new Vertex(6, new Vec3d(0, 0, 1), null) //
+            new Vertex(3, new Vec3d(0, 0, 1), null), //
+            new Vertex(2, new Vec3d(0, 0, 1), null) //
         ));
 
         final List<Face> faces = Arrays.asList(bottom, top, left, right, front, back);
@@ -133,15 +133,15 @@ public class MeshBuilder {
             final int s0 = k;
             final int s1 = k < segments-1 ? k+1 : 0;
             faces.add(new Face(Arrays.asList(
-                    new Vertex(s0, null, null),
-                    new Vertex(s1, null, null),
+                    new Vertex(s0+n, null, null),
                     new Vertex(s1+n, null, null),
-                    new Vertex(s0+n, null, null)
+                    new Vertex(s1, null, null),
+                    new Vertex(s0, null, null)
             )));
         }
 
-        faces.add(new Face(IntStream.range(0, n).boxed().map(i -> new Vertex(i, null, null)).collect(Collectors.toList())).reverseWinding());
-        faces.add(new Face(IntStream.range(n, 2*n).boxed().map(i -> new Vertex(i, null, null)).collect(Collectors.toList())));
+        faces.add(new Face(IntStream.range(0, n).boxed().map(i -> new Vertex(i, null, null)).collect(Collectors.toList())));
+        faces.add(new Face(IntStream.range(n, 2*n).boxed().map(i -> new Vertex(i, null, null)).collect(Collectors.toList())).reverseWinding());
 
         return new Mesh(points, faces);
     }
