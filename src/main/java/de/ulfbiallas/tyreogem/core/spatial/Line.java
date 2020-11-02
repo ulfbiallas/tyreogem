@@ -32,6 +32,10 @@ public class Line {
         return direction;
     }
 
+    public MultiIntersection<Intersection> intersect(Sphere sphere) {
+        return sphere.intersect(this);
+    }
+
     public double distanceTo(Vec3d point) {
         final Plane plane = new Plane(point, direction);
         final Intersection intersection = plane.intersect(this);
