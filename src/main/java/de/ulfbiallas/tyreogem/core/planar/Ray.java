@@ -23,7 +23,7 @@ public class Ray {
     }
 
     public Vec2d getPoint(double parameter) {
-        return origin.add(direction).scale(parameter);
+        return origin.add(direction.scale(parameter));
     }
 
     public RayIntersection intersect(Ray ray) {

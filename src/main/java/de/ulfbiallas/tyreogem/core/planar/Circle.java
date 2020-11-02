@@ -29,6 +29,14 @@ public class Circle {
         return radius;
     }
 
+    public double getDiameter() {
+        return 2*radius;
+    }
+
+    public double getCircumference() {
+        return Math.PI * getDiameter();
+    }
+
     public MultiIntersection<Intersection> intersect(Line line) {
         final Ray ray = new Ray(line.getPointOnLine(), line.getDirection());
         final List<Double> parameters = getIntersectionParameters(ray);
