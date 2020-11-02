@@ -126,6 +126,19 @@ public class LineSegmentTest {
     }
 
     @Test
+    public void test_intersectionWithCircle_intersecting() {
+        final Circle circle = new Circle(new Vec2d(4, 1), 3);
+        final MultiIntersection<Intersection> intersections = lineSegment4.intersect(circle);
+        Assert.assertTrue(intersections.isIntersecting());
+        Assert.assertEquals(1 , intersections.getNumberOfIntersections());
+
+        Intersection i = intersections.getIntersections().get(0);
+        Assert.assertTrue(i.isIntersecting());
+        Assert.assertEquals(4.0, i.getIntersection().x, 0.00001);
+        Assert.assertEquals(4.0, i.getIntersection().y, 0.00001);
+    }
+
+    @Test
     public void test_distanceTo() {
         final double distance1 = lineSegment3.distanceTo(new Vec2d(4, 4));
         Assert.assertEquals(0.0, distance1, 0.00001);

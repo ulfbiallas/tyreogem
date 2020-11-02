@@ -70,6 +70,10 @@ public class Ray {
         return new RayIntersection();
     }
 
+    public MultiIntersection<RayIntersection> intersect(Circle circle) {
+        return circle.intersect(this);
+    }
+
     public double distanceTo(Vec2d point) {
         final Line line = Line.createLineWithPointAndDirection(point, getDirection().perpendicular());
         final RayIntersection intersection = intersect(line);

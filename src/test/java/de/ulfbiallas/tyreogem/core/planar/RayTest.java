@@ -24,6 +24,13 @@ public class RayTest {
     }
 
     @Test
+    public void test_getPoint() {
+        final Vec2d point = ray1.getPoint(2.0);
+        Assert.assertEquals(4.0, point.x, 0.00001);
+        Assert.assertEquals(5.0, point.y, 0.00001);
+    }
+
+    @Test
     public void test_intersectionWithRay_intersecting() {
         final RayIntersection iRay1Ray3 = ray1.intersect(ray3);
         Assert.assertTrue(iRay1Ray3.isIntersecting());
@@ -102,6 +109,20 @@ public class RayTest {
         Assert.assertFalse(i.isIntersecting());
         Assert.assertNull(i.getIntersection());
         Assert.assertEquals(i.getParameter(), 0.0, 0.00001);
+    }
+
+    @Test
+    public void test_intersectionWithCircle_intersecting() {
+        final Circle circle = new Circle(new Vec2d(4, 2), 3);
+        final MultiIntersection<RayIntersection> intersections = ray1.intersect(circle);
+        Assert.assertTrue(intersections.isIntersecting());
+        Assert.assertEquals(1 , intersections.getNumberOfIntersections());
+
+        RayIntersection i = intersections.getIntersections().get(0);
+        Assert.assertTrue(i.isIntersecting());
+        Assert.assertEquals(2.0, i.getParameter(), 0.00001);
+        Assert.assertEquals(4.0, i.getIntersection().x, 0.00001);
+        Assert.assertEquals(5.0, i.getIntersection().y, 0.00001);
     }
 
     @Test
