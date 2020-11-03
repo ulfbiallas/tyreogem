@@ -35,6 +35,20 @@ public class LineSegmentTest {
     }
 
     @Test
+    public void test_intersectionWithSphere_intersecting() {
+        final Sphere sphere = new Sphere(new Vec3d(3, 2.5, -1), 1.0);
+        final MultiIntersection<Intersection> intersections = lineSegment.intersect(sphere);
+        Assert.assertTrue(intersections.isIntersecting());
+        Assert.assertEquals(1 , intersections.getNumberOfIntersections());
+
+        Intersection i = intersections.getIntersections().get(0);
+        Assert.assertTrue(i.isIntersecting());
+        Assert.assertEquals(3.0, i.getIntersection().x, 0.00001);
+        Assert.assertEquals(3.5, i.getIntersection().y, 0.00001);
+        Assert.assertEquals(-1.0, i.getIntersection().z, 0.00001);
+    }
+
+    @Test
     public void test_distanceTo() {
         final double distance1 = lineSegment.distanceTo(new Vec3d(3, 4, -1));
         Assert.assertEquals(0.0, distance1, 0.00001);

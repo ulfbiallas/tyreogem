@@ -57,6 +57,26 @@ public class LineTest {
     }
 
     @Test
+    public void test_intersectionWithSphere_intersecting() {
+        final Sphere sphere = new Sphere(new Vec3d(3, -4, -1), 3);
+        final MultiIntersection<Intersection> intersections = line.intersect(sphere);
+        Assert.assertTrue(intersections.isIntersecting());
+        Assert.assertEquals(2 , intersections.getNumberOfIntersections());
+
+        Intersection i1 = intersections.getIntersections().get(0);
+        Assert.assertTrue(i1.isIntersecting());
+        Assert.assertEquals(3, i1.getIntersection().x, 0.01);
+        Assert.assertEquals(-7, i1.getIntersection().y, 0.01);
+        Assert.assertEquals(-1, i1.getIntersection().z, 0.01);
+
+        Intersection i2 = intersections.getIntersections().get(1);
+        Assert.assertTrue(i2.isIntersecting());
+        Assert.assertEquals(3, i2.getIntersection().x, 0.01);
+        Assert.assertEquals(-1, i2.getIntersection().y, 0.01);
+        Assert.assertEquals(-1, i2.getIntersection().z, 0.01);
+    }
+
+    @Test
     public void test_distanceTo() {
         final double distance1 = line.distanceTo(new Vec3d(3, 4, -1));
         Assert.assertEquals(0.0, distance1, 0.00001);

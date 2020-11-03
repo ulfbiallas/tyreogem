@@ -53,6 +53,10 @@ public class Line {
         return ray.intersect(this);
     }
 
+    public MultiIntersection<Intersection> intersect(Circle circle) {
+        return circle.intersect(this);
+    }
+
     public double distanceTo(Vec2d point) {
         final Vec2d p = getPointOnLine();
         final Vec2d d = getDirection();

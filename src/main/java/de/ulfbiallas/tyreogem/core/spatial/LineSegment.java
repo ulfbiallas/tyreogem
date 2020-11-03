@@ -36,6 +36,10 @@ public class LineSegment {
         return length;
     }
 
+    public MultiIntersection<Intersection> intersect(Sphere sphere) {
+        return sphere.intersect(this);
+    }
+
     public double distanceTo(Vec3d point) {
         final Ray rayFromStart = new Ray(start, direction);
         final Ray rayFromEnd = new Ray(end, direction.negate());

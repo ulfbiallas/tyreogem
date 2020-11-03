@@ -22,6 +22,10 @@ public class Ray {
         return direction;
     }
 
+    public Vec2d getPoint(double parameter) {
+        return origin.add(direction.scale(parameter));
+    }
+
     public RayIntersection intersect(Ray ray) {
         final Matrix2x2d matrix = new Matrix2x2d(direction, ray.getDirection().negate());
         final Vec2d r = ray.getOrigin().sub(origin);
@@ -64,6 +68,10 @@ public class Ray {
             }
         }
         return new RayIntersection();
+    }
+
+    public MultiIntersection<RayIntersection> intersect(Circle circle) {
+        return circle.intersect(this);
     }
 
     public double distanceTo(Vec2d point) {

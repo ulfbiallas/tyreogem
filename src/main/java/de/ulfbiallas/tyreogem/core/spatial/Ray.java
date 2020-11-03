@@ -21,6 +21,14 @@ public class Ray {
         return direction;
     }
 
+    public Vec3d getPoint(double parameter) {
+        return origin.add(direction.scale(parameter));
+    }
+
+    public MultiIntersection<RayIntersection> intersect(Sphere sphere) {
+        return sphere.intersect(this);
+    }
+
     public double distanceTo(Vec3d point) {
         final Plane plane = new Plane(point, direction);
         final Intersection intersection = plane.intersect(this);
