@@ -21,6 +21,29 @@ public class RayTest {
     }
 
     @Test
+    public void test_getPoint() {
+        final Vec3d point = ray.getPoint(2.0);
+        Assert.assertEquals(3.0, point.x, 0.00001);
+        Assert.assertEquals(4.0, point.y, 0.00001);
+        Assert.assertEquals(-1.0, point.z, 0.00001);
+    }
+
+    @Test
+    public void test_intersectionWithSphere_intersecting() {
+        final Sphere sphere = new Sphere(new Vec3d(3, 2, -1), 3);
+        final MultiIntersection<RayIntersection> intersections = ray.intersect(sphere);
+        Assert.assertTrue(intersections.isIntersecting());
+        Assert.assertEquals(1 , intersections.getNumberOfIntersections());
+
+        RayIntersection i = intersections.getIntersections().get(0);
+        Assert.assertTrue(i.isIntersecting());
+        Assert.assertEquals(3.0, i.getParameter(), 0.00001);
+        Assert.assertEquals(3.0, i.getIntersection().x, 0.00001);
+        Assert.assertEquals(5.0, i.getIntersection().y, 0.00001);
+        Assert.assertEquals(-1.0, i.getIntersection().z, 0.00001);
+    }
+
+    @Test
     public void test_distanceTo() {
         final double distance1 = ray.distanceTo(new Vec3d(3, 4, -1));
         Assert.assertEquals(0.0, distance1, 0.00001);
