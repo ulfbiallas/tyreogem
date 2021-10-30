@@ -66,7 +66,7 @@ public class LineSegment {
         return new Intersection();
     }
 
-    public Intersection intersect(Ray ray) {
+    public RayIntersection intersect(Ray ray) {
         return ray.intersect(this);
     }
 
