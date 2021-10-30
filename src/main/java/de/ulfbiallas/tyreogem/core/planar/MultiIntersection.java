@@ -1,13 +1,14 @@
 package de.ulfbiallas.tyreogem.core.planar;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MultiIntersection<T extends Intersection> {
 
     private final List<T> intersections;
 
     public MultiIntersection(List<T> intersections) {
-        this.intersections = intersections;
+        this.intersections = intersections.stream().filter(i -> i.isIntersecting()).collect(Collectors.toList());
     }
 
     public List<T> getIntersections() {
