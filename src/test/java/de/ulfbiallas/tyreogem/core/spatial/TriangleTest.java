@@ -1,6 +1,7 @@
 package de.ulfbiallas.tyreogem.core.spatial;
 
 import de.ulfbiallas.tyreogem.core.math.Vec3d;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -25,6 +26,42 @@ public class TriangleTest {
         Assert.assertEquals(0.0, plane.getNormal().x, 0.00001);
         Assert.assertEquals(0.0, plane.getNormal().y, 0.00001);
         Assert.assertEquals(1.0, plane.getNormal().z, 0.00001);
+    }
+
+    @Test
+    public void test_getAB() {
+        final Triangle triangle = new Triangle(new Vec3d(5, 3, -2), new Vec3d(8, 3, -2), new Vec3d(5, 6, -2));
+        final LineSegment ab = triangle.getAB();
+        Assert.assertEquals(5.0, ab.getStart().x, 0.00001);
+        Assert.assertEquals(3.0, ab.getStart().y, 0.00001);
+        Assert.assertEquals(-2.0, ab.getStart().z, 0.00001);
+        Assert.assertEquals(8.0, ab.getEnd().x, 0.00001);
+        Assert.assertEquals(3.0, ab.getEnd().y, 0.00001);
+        Assert.assertEquals(-2.0, ab.getEnd().z, 0.00001);
+    }
+
+    @Test
+    public void test_getBC() {
+        final Triangle triangle = new Triangle(new Vec3d(5, 3, -2), new Vec3d(8, 3, -2), new Vec3d(5, 6, -2));
+        final LineSegment bc = triangle.getBC();
+        Assert.assertEquals(8.0, bc.getStart().x, 0.00001);
+        Assert.assertEquals(3.0, bc.getStart().y, 0.00001);
+        Assert.assertEquals(-2.0, bc.getStart().z, 0.00001);
+        Assert.assertEquals(5.0, bc.getEnd().x, 0.00001);
+        Assert.assertEquals(6.0, bc.getEnd().y, 0.00001);
+        Assert.assertEquals(-2.0, bc.getEnd().z, 0.00001);
+    }
+
+    @Test
+    public void test_getCA() {
+        final Triangle triangle = new Triangle(new Vec3d(5, 3, -2), new Vec3d(8, 3, -2), new Vec3d(5, 6, -2));
+        final LineSegment ca = triangle.getCA();
+        Assert.assertEquals(5.0, ca.getStart().x, 0.00001);
+        Assert.assertEquals(6.0, ca.getStart().y, 0.00001);
+        Assert.assertEquals(-2.0, ca.getStart().z, 0.00001);
+        Assert.assertEquals(5.0, ca.getEnd().x, 0.00001);
+        Assert.assertEquals(3.0, ca.getEnd().y, 0.00001);
+        Assert.assertEquals(-2.0, ca.getEnd().z, 0.00001);
     }
 
     @Test
