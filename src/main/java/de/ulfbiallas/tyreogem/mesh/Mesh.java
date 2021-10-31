@@ -54,10 +54,10 @@ public class Mesh {
         final Vec3d v1 = points.get(face.getVertices().get(1).getPointIndex());
         final Vec3d v2 = points.get(face.getVertices().get(2).getPointIndex());
 
-        final Vec3d a = v0.sub(v1).normalize();
-        final Vec3d b = v2.sub(v1).normalize();
+        final Vec3d a = v1.sub(v0);
+        final Vec3d b = v2.sub(v0);
 
-        return a.cross(b);
+        return a.cross(b).normalize();
     }
 
 }

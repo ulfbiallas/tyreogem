@@ -25,17 +25,21 @@ public class MeshTest {
         Assert.assertEquals(v2, mesh.getPoints().get(2));
         Assert.assertEquals(v3, mesh.getPoints().get(3));
 
-        Assert.assertEquals(2, mesh.getFaces().size());
         Assert.assertEquals(3, mesh.getFaces().get(0).getVertices().size());
+        Assert.assertEquals(2, mesh.getFaces().get(0).getVertices().get(0).getPointIndex());
+        Assert.assertEquals(1, mesh.getFaces().get(0).getVertices().get(1).getPointIndex());
+        Assert.assertEquals(0, mesh.getFaces().get(0).getVertices().get(2).getPointIndex());
+
         Assert.assertEquals(3, mesh.getFaces().get(1).getVertices().size());
+        Assert.assertEquals(0, mesh.getFaces().get(1).getVertices().get(0).getPointIndex());
+        Assert.assertEquals(3, mesh.getFaces().get(1).getVertices().get(1).getPointIndex());
+        Assert.assertEquals(2, mesh.getFaces().get(1).getVertices().get(2).getPointIndex());
 
-        Assert.assertEquals(0, mesh.getFaces().get(0).getVertices().get(0).getPointIndex());
         Assert.assertEquals(new Vec3d(0.0, 1.0, 0.0), mesh.getFaces().get(0).getVertices().get(0).getNormal());
-        Assert.assertEquals(new Vec2d(0.0, 0.0), mesh.getFaces().get(0).getVertices().get(0).getTextureCoordinates());
+        Assert.assertEquals(new Vec2d(1.0, 1.0), mesh.getFaces().get(0).getVertices().get(0).getTextureCoordinates());
 
-        Assert.assertEquals(2, mesh.getFaces().get(1).getVertices().get(0).getPointIndex());
         Assert.assertEquals(new Vec3d(0.0, 1.0, 0.0), mesh.getFaces().get(1).getVertices().get(0).getNormal());
-        Assert.assertEquals(new Vec2d(1.0, 1.0), mesh.getFaces().get(1).getVertices().get(0).getTextureCoordinates());
+        Assert.assertEquals(new Vec2d(0.0, 0.0), mesh.getFaces().get(1).getVertices().get(0).getTextureCoordinates());
     }
 
     @Test
@@ -67,8 +71,8 @@ public class MeshTest {
         Assert.assertEquals(3, mesh.getFaces().get(1).getVertices().size());
         Assert.assertEquals(3, mesh.getFaces().get(2).getVertices().size());
 
-        Assert.assertEquals(0, mesh.getFaces().get(0).getVertices().get(0).getPointIndex());
-        Assert.assertEquals(2, mesh.getFaces().get(1).getVertices().get(0).getPointIndex());
+        Assert.assertEquals(2, mesh.getFaces().get(0).getVertices().get(0).getPointIndex());
+        Assert.assertEquals(0, mesh.getFaces().get(1).getVertices().get(0).getPointIndex());
         Assert.assertEquals(4, mesh.getFaces().get(2).getVertices().get(0).getPointIndex());
 
         Assert.assertEquals(new Vec3d(0.0, 1.0, 0.0), mesh.getFaces().get(0).getVertices().get(0).getNormal());
@@ -88,13 +92,13 @@ public class MeshTest {
         Assert.assertEquals(v2, meshWithReversedWinding.getPoints().get(2));
         Assert.assertEquals(v3, meshWithReversedWinding.getPoints().get(3));
 
-        Assert.assertEquals(2, meshWithReversedWinding.getFaces().get(0).getVertices().get(0).getPointIndex());
+        Assert.assertEquals(0, meshWithReversedWinding.getFaces().get(0).getVertices().get(0).getPointIndex());
         Assert.assertEquals(1, meshWithReversedWinding.getFaces().get(0).getVertices().get(1).getPointIndex());
-        Assert.assertEquals(0, meshWithReversedWinding.getFaces().get(0).getVertices().get(2).getPointIndex());
+        Assert.assertEquals(2, meshWithReversedWinding.getFaces().get(0).getVertices().get(2).getPointIndex());
 
-        Assert.assertEquals(0, meshWithReversedWinding.getFaces().get(1).getVertices().get(0).getPointIndex());
+        Assert.assertEquals(2, meshWithReversedWinding.getFaces().get(1).getVertices().get(0).getPointIndex());
         Assert.assertEquals(3, meshWithReversedWinding.getFaces().get(1).getVertices().get(1).getPointIndex());
-        Assert.assertEquals(2, meshWithReversedWinding.getFaces().get(1).getVertices().get(2).getPointIndex());
+        Assert.assertEquals(0, meshWithReversedWinding.getFaces().get(1).getVertices().get(2).getPointIndex());
     }
 
     @Test
@@ -126,8 +130,8 @@ public class MeshTest {
         final Vertex vertex1 = new Vertex(1, new Vec3d(0.0, 1.0, 0.0), new Vec2d(1.0, 0.0));
         final Vertex vertex2 = new Vertex(2, new Vec3d(0.0, 1.0, 0.0), new Vec2d(1.0, 1.0));
         final Vertex vertex3 = new Vertex(3, new Vec3d(0.0, 1.0, 0.0), new Vec2d(0.0, 1.0));
-        final Face face0 = new Face(Arrays.asList(vertex0, vertex1, vertex2));
-        final Face face1 = new Face(Arrays.asList(vertex2, vertex3, vertex0));
+        final Face face0 = new Face(Arrays.asList(vertex2, vertex1, vertex0)); // CW-winding
+        final Face face1 = new Face(Arrays.asList(vertex0, vertex3, vertex2)); // CW-winding
         final Mesh mesh = new Mesh(Arrays.asList(v0, v1, v2, v3), Arrays.asList(face0, face1));
         return mesh;
     }
