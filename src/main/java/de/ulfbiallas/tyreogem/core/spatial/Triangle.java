@@ -30,8 +30,54 @@ public class Triangle {
         return c;
     }
 
+    public LineSegment getAB() {
+        return new LineSegment(a, b);
+    }
+
+    public LineSegment getBC() {
+        return new LineSegment(b, c);
+    }
+
+    public LineSegment getCA() {
+        return new LineSegment(c, a);
+    }
+
     public Plane getPlane() {
         return new Plane(a, b, c);
+    }
+
+    public Intersection intersect(Line line) {
+        final Intersection planeIntersection = getPlane().intersect(line);
+        if(isIntersectionInsideTriangle(planeIntersection)) {
+            return planeIntersection;
+        }
+        return new Intersection();
+    }
+
+    public Intersection intersect(LineSegment lineSegment) {
+        final Intersection planeIntersection = getPlane().intersect(lineSegment);
+        if(isIntersectionInsideTriangle(planeIntersection)) {
+            return planeIntersection;
+        }
+        return new Intersection();
+    }
+
+    public RayIntersection intersect(Ray ray) {
+        final RayIntersection planeIntersection = getPlane().intersect(ray);
+        if(isIntersectionInsideTriangle(planeIntersection)) {
+            return planeIntersection;
+        }
+        return new RayIntersection();
+    }
+
+    private boolean isIntersectionInsideTriangle(Intersection planeIntersection) {
+        if(planeIntersection.isIntersecting()) {
+            final Vec3d x = planeIntersection.getIntersection();
+            if(isPointOnPlaneInside(x)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean isPointOnPlaneInside(Vec3d point) {
@@ -53,41 +99,6 @@ public class Triangle {
         final double mu = result.y;
 
         return mu >= 0 && lambda >= 0 && mu+lambda <= 1;
-    }
-
-    private boolean isIntersectionInsideTriangle(Intersection planeIntersection) {
-        if(planeIntersection.isIntersecting()) {
-            final Vec3d x = planeIntersection.getIntersection();
-            if(isPointOnPlaneInside(x)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Intersection intersect(Line line) {
-        final Intersection planeIntersection = getPlane().intersect(line);
-        if(isIntersectionInsideTriangle(planeIntersection)) {
-            return planeIntersection;
-        }
-        return new Intersection();
-    }
-
-    public Intersection intersect(LineSegment lineSegment) {
-        final Intersection planeIntersection = getPlane().intersect(lineSegment);
-        if(isIntersectionInsideTriangle(planeIntersection)) {
-            return planeIntersection;
-        }
-        return new Intersection();
-    }
-
-
-    public RayIntersection intersect(Ray ray) {
-        final RayIntersection planeIntersection = getPlane().intersect(ray);
-        if(isIntersectionInsideTriangle(planeIntersection)) {
-            return planeIntersection;
-        }
-        return new RayIntersection();
     }
 
 }

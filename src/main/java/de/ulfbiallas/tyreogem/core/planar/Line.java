@@ -49,7 +49,7 @@ public class Line {
         return lineSegment.intersect(this);
     }
 
-    public Intersection intersect(Ray ray) {
+    public RayIntersection intersect(Ray ray) {
         return ray.intersect(this);
     }
 
