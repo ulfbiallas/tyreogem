@@ -1,6 +1,7 @@
 package de.ulfbiallas.tyreogem.mesh;
 
 import java.io.File;
+import java.util.Objects;
 
 import de.ulfbiallas.tyreogem.core.math.Vec3d;
 
@@ -98,5 +99,18 @@ public class Material {
         material.setMap_d(map_d);
         material.setShininess(shininess);
         return material;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Material material = (Material) o;
+        return Double.compare(material.shininess, shininess) == 0 && Objects.equals(name, material.name) && Objects.equals(Ka, material.Ka) && Objects.equals(map_Ka, material.map_Ka) && Objects.equals(Kd, material.Kd) && Objects.equals(map_Kd, material.map_Kd) && Objects.equals(Ks, material.Ks) && Objects.equals(map_d, material.map_d);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, Ka, map_Ka, Kd, map_Kd, Ks, shininess, map_d);
     }
 }
