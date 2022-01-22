@@ -2,6 +2,8 @@ package de.ulfbiallas.tyreogem.core.spatial;
 
 import de.ulfbiallas.tyreogem.core.math.Vec3d;
 
+import java.util.Optional;
+
 public class Plane {
 
     private final Vec3d pointOnPlane;
@@ -53,6 +55,18 @@ public class Plane {
             }
         }
         return new RayIntersection();
+    }
+
+    public Optional<Line> intersect(Plane plane) {
+        if(plane.normal.dot(this.normal) == 1) {
+            return Optional.empty(); // The planes are parallel
+        } else {
+            Vec3d n = normal.cross(this.normal);
+
+            // TODO find point on both planes
+
+            return Optional.empty();
+        }
     }
 
     /*
