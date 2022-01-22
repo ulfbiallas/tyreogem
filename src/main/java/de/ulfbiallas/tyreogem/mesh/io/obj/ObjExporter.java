@@ -34,12 +34,18 @@ public class ObjExporter implements Exporter {
         final FileWriter objFileWriter = new FileWriter(descriptor.getObjFile());
         writeObjFile(objMesh, objFileWriter);
 
-        final FileWriter mtlFileWriter = new FileWriter(descriptor.getMtlFile());
-        writeMtlFile(objMesh, mtlFileWriter);
+        if(!objMesh.getMaterials().isEmpty()) {
+            final FileWriter mtlFileWriter = new FileWriter(descriptor.getMtlFile());
+            writeMtlFile(objMesh, mtlFileWriter);
+        }
     }
 
     private String createMtlLine(String name, Vec3d value) {
-        return name + " " + value.x + " " + value.y + " " + value.z +"\n";
+        if(value != null) {
+            return name + " " + value.x + " " + value.y + " " + value.z +"\n";
+        } else {
+            return "";
+        }
     }
 
     private String createMtlLine(String name, double value) {

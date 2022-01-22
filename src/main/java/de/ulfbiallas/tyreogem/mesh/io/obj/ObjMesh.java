@@ -37,7 +37,7 @@ public class ObjMesh {
         this.faces = new ArrayList<>();
 
         final List<ObjMaterial> objMaterials = mesh.getFaces().stream().map(face -> face.getMaterial()).filter(Objects::nonNull).distinct().map(m -> new ObjMaterial(m)).collect(Collectors.toList());
-        this.materials = objMaterials.isEmpty() ? new HashMap<>() : objMaterials.stream().collect(Collectors.toMap(m -> m.getName(), m -> m));
+        this.materials = objMaterials.isEmpty() ? new HashMap<>() : objMaterials.stream().distinct().collect(Collectors.toMap(m -> m.getName(), m -> m));
 
         mesh.getFaces().forEach(face -> {
             final List<ObjFaceIndex> indices = new ArrayList<>();
