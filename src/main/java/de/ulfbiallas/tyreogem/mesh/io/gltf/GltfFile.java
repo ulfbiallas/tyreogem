@@ -23,7 +23,7 @@ import de.ulfbiallas.tyreogem.mesh.io.gltf.GltfSampler.SamplerMagFilter;
 import de.ulfbiallas.tyreogem.mesh.io.gltf.GltfSampler.SamplerMinFilter;
 import de.ulfbiallas.tyreogem.mesh.io.gltf.GltfSampler.SamplerWrapping;
 
-@JsonInclude(Include.NON_NULL)
+@JsonInclude(Include.NON_EMPTY)
 public class GltfFile {
 
     private final GltfAsset asset;

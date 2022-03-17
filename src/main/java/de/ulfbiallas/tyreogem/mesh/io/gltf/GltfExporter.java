@@ -3,6 +3,7 @@ package de.ulfbiallas.tyreogem.mesh.io.gltf;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,102 +27,91 @@ public class GltfExporter implements Exporter {
 
     @Override
     public void exportMesh(Mesh mesh, File directory, String fileName) {
-            final Mesh triangleMesh = mesh.triangulateByEarClipping();
+        final File file = new File(directory.getAbsolutePath(), fileName + ".gltf");
+        try {
+            final FileWriter fileWriter = new FileWriter(file);
+            exportMesh(mesh, fileWriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-            final GltfAsset gltfAsset = new GltfAsset();
+    public void exportMesh(Mesh mesh, Writer writer) {
+        final Mesh triangleMesh = mesh.triangulateByEarClipping();
 
-            final GltfFile gltfFile = new GltfFile(gltfAsset);
+        final GltfAsset gltfAsset = new GltfAsset();
+        final GltfFile gltfFile = new GltfFile(gltfAsset);
 
-            /*
-            final Map<Material, List<Face>> facesByMaterial = new HashMap<>(); // Faces without materials have the key null.
-            for(Face face: triangleMesh.getFaces()) {
-                final Material material = face.getMaterial();
-                if(!facesByMaterial.containsKey(material)) {
-                    facesByMaterial.put(material, new ArrayList<Face>());
+        final Map<Material, List<Face>> facesByMaterial = triangleMesh.getFacesByMaterial();
+        final List<Material> materials = triangleMesh.getMaterials();
+
+        // ensure points/vertices/texCoords have the same indices
+        int vertexIdx = 0;
+        final List<Vec3d> pointsPerVertex = new ArrayList<>();
+        final List<Vec3d> normalsPerVertex = new ArrayList<>();
+        final List<Vec2d> uvPerVertex = new ArrayList<>();
+        final Map<Material, List<Integer>> indicesByMaterial = new HashMap<>();
+        for(Material material: materials) {
+            indicesByMaterial.put(material, new ArrayList<Integer>());
+            final List<Vertex> vertices = facesByMaterial.get(material).stream().flatMap(f -> f.getVertices().stream()).collect(Collectors.toList());
+            for(Vertex vertex: vertices) {
+                final int index = vertex.getPointIndex();
+                pointsPerVertex.add(triangleMesh.getPoints().get(index));
+                final Vec3d normal = vertex.getNormal();
+                if(vertex.getNormal() != null) {
+                    normalsPerVertex.add(normal);
                 }
-                facesByMaterial.get(material).add(face);
-            }
-            final List<Material> availableMaterials = facesByMaterial.keySet().stream().collect(Collectors.toList());
-            */
-
-            final Map<Material, List<Face>> facesByMaterial = triangleMesh.getFacesByMaterial();
-            final List<Material> materials = triangleMesh.getMaterials();
-
-            // ensure points/vertices/texCoords have the same indices
-            int vertexIdx = 0;
-            final List<Vec3d> pointsPerVertex = new ArrayList<>();
-            final List<Vec3d> normalsPerVertex = new ArrayList<>();
-            final List<Vec2d> uvPerVertex = new ArrayList<>();
-            final Map<Material, List<Integer>> indicesByMaterial = new HashMap<>();
-            for(Material material: materials) {
-                indicesByMaterial.put(material, new ArrayList<Integer>());
-                final List<Vertex> vertices = facesByMaterial.get(material).stream().flatMap(f -> f.getVertices().stream()).collect(Collectors.toList());
-                for(Vertex vertex: vertices) {
-                    final int index = vertex.getPointIndex();
-                    pointsPerVertex.add(triangleMesh.getPoints().get(index));
-                    final Vec3d normal = vertex.getNormal();
-                    if(vertex.getNormal() != null) {
-                        normalsPerVertex.add(normal);
-                    }
-                    final Vec2d uv = vertex.getTextureCoordinates();
-                    if(uv != null) {
-                        final boolean flipX = false;
-                        final boolean flipY = true;
-                        final Vec2d uvFlipped = new Vec2d(flipX ? -uv.x : uv.x, flipY ? -uv.y : uv.y);
-                        uvPerVertex.add(uvFlipped);
-                    }
-                    indicesByMaterial.get(material).add(vertexIdx);
-                    vertexIdx++;
+                final Vec2d uv = vertex.getTextureCoordinates();
+                if(uv != null) {
+                    final boolean flipX = false;
+                    final boolean flipY = true;
+                    final Vec2d uvFlipped = new Vec2d(flipX ? -uv.x : uv.x, flipY ? -uv.y : uv.y);
+                    uvPerVertex.add(uvFlipped);
                 }
+                indicesByMaterial.get(material).add(vertexIdx);
+                vertexIdx++;
+            }
+        }
+
+        final int pointIndex = gltfFile.setPoints(pointsPerVertex);
+
+        Map<String, Integer> attributes = new HashMap<>();
+        attributes.put("POSITION", pointIndex);
+
+        final int normalIndex = gltfFile.setNormals(normalsPerVertex);
+        if(normalIndex > 0 && normalsPerVertex.size() == pointsPerVertex.size()) {
+            attributes.put("NORMAL", normalIndex);
+        }
+
+        final int texCoordsIndex = gltfFile.setTextureCoordinates(uvPerVertex);
+        if(texCoordsIndex > 0 && uvPerVertex.size() == pointsPerVertex.size()) {
+            attributes.put("TEXCOORD_0", texCoordsIndex);
+        }
+
+        List<GltfPrimitive> gltfPrimitives = new ArrayList<>();
+        for(Material material: materials) {
+            Integer materialIndex = null;
+            if(material != null && material.getMap_Kd() != null) {
+                materialIndex = gltfFile.addTexture(material.getMap_Kd());
             }
 
-            final int pointIndex = gltfFile.setPoints(pointsPerVertex);
+            final int indicesIndex = gltfFile.setIndices(indicesByMaterial.get(material));
+            GltfPrimitive gltfPrimitive = new GltfPrimitive(attributes, indicesIndex, MeshPrimitiveMode.TRIANGLES, materialIndex);
+            gltfPrimitives.add(gltfPrimitive);
+        }
 
-            Map<String, Integer> attributes = new HashMap<>();
-            attributes.put("POSITION", pointIndex);
+        GltfMesh gltfMesh = new GltfMesh("defaultMesh", gltfPrimitives);
+        gltfFile.addMesh(gltfMesh);
 
-            //final List<Vec3d> normals = triangleMesh.getFaces().stream().flatMap(f -> f.getVertices().stream()).map(v -> v.getNormal()).filter(Objects::nonNull).collect(Collectors.toList());
-            final int normalIndex = gltfFile.setNormals(normalsPerVertex);
-            if(normalIndex > 0 && normalsPerVertex.size() == pointsPerVertex.size()) {
-                attributes.put("NORMAL", normalIndex);
-            }
-
-            //final List<Vec2d> texCoords = triangleMesh.getFaces().stream().flatMap(f -> f.getVertices().stream()).map(v -> v.getTextureCoordinates()).filter(Objects::nonNull).collect(Collectors.toList());
-            final int texCoordsIndex = gltfFile.setTextureCoordinates(uvPerVertex);
-            if(texCoordsIndex > 0 && uvPerVertex.size() == pointsPerVertex.size()) {
-                attributes.put("TEXCOORD_0", texCoordsIndex);
-            }
-
-            List<GltfPrimitive> gltfPrimitives = new ArrayList<>();
-            for(Material material: materials) {
-                Integer materialIndex = null;
-                if(material != null && material.getMap_Kd() != null) {
-                    materialIndex = gltfFile.addTexture(material.getMap_Kd());
-                }
-
-                final int indicesIndex = gltfFile.setIndices(indicesByMaterial.get(material));
-                GltfPrimitive gltfPrimitive = new GltfPrimitive(attributes, indicesIndex, MeshPrimitiveMode.TRIANGLES, materialIndex);
-                gltfPrimitives.add(gltfPrimitive);
-            }
-
-            GltfMesh gltfMesh = new GltfMesh("defaultMesh", gltfPrimitives);
-            gltfFile.addMesh(gltfMesh);
-
-            final ObjectWriter objectWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
-            try {
-                final String json = objectWriter.writeValueAsString(gltfFile);
-
-                final File file = new File(directory.getAbsolutePath(), fileName + ".gltf");
-                final FileWriter fileWriter = new FileWriter(file);
-                fileWriter.write(json);
-                fileWriter.close();
-
-            } catch (JsonProcessingException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+        final ObjectWriter objectWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
+        try {
+            final String json = objectWriter.writeValueAsString(gltfFile);
+            writer.write(json);
+            writer.close();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

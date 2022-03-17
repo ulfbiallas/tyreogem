@@ -1,0 +1,88 @@
+{
+  "asset" : {
+    "version" : "2.0",
+    "generator" : "Tyreogem"
+  },
+  "scene" : 0,
+  "scenes" : [ {
+    "nodes" : [ 0 ]
+  } ],
+  "nodes" : [ {
+    "mesh" : 0
+  } ],
+  "meshes" : [ {
+    "name" : "defaultMesh",
+    "primitives" : [ {
+      "attributes" : {
+        "POSITION" : 0,
+        "TEXCOORD_0" : 2,
+        "NORMAL" : 1
+      },
+      "indices" : 3,
+      "mode" : 4
+    } ]
+  } ],
+  "buffers" : [ {
+    "uri" : "data:application/gltf-buffer;base64,AAAAAAAAAAAAAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAIA/AACAPwAAAAAAAIA/AAAAAAAAAAAAAIA/AAAAAAAAAAAAAAAA",
+    "byteLength" : 72
+  }, {
+    "uri" : "data:application/gltf-buffer;base64,AAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAA",
+    "byteLength" : 72
+  }, {
+    "uri" : "data:application/gltf-buffer;base64,AAAAAAAAAIAAAIA/AAAAgAAAgD8AAIC/AACAPwAAgL8AAAAAAACAvwAAAAAAAACA",
+    "byteLength" : 48
+  }, {
+    "uri" : "data:application/gltf-buffer;base64,AAAAAAEAAAACAAAAAwAAAAQAAAAFAAAA",
+    "byteLength" : 24
+  } ],
+  "bufferViews" : [ {
+    "buffer" : 0,
+    "byteOffset" : 0,
+    "byteLength" : 72
+  }, {
+    "buffer" : 1,
+    "byteOffset" : 0,
+    "byteLength" : 72
+  }, {
+    "buffer" : 2,
+    "byteOffset" : 0,
+    "byteLength" : 48
+  }, {
+    "buffer" : 3,
+    "byteOffset" : 0,
+    "byteLength" : 24
+  } ],
+  "accessors" : [ {
+    "bufferView" : 0,
+    "byteOffset" : 0,
+    "componentType" : 5126,
+    "count" : 6,
+    "type" : "VEC3",
+    "min" : [ 0.0, 0.0, 0.0 ],
+    "max" : [ 1.0, 0.0, 1.0 ]
+  }, {
+    "bufferView" : 1,
+    "byteOffset" : 0,
+    "componentType" : 5126,
+    "count" : 6,
+    "type" : "VEC3",
+    "min" : [ 0.0, 1.0, 0.0 ],
+    "max" : [ 0.0, 1.0, 0.0 ]
+  }, {
+    "bufferView" : 2,
+    "byteOffset" : 0,
+    "componentType" : 5126,
+    "count" : 6,
+    "type" : "VEC2",
+    "min" : [ 0.0, -1.0 ],
+    "max" : [ 1.0, -0.0 ]
+  }, {
+    "bufferView" : 3,
+    "byteOffset" : 0,
+    "componentType" : 5125,
+    "count" : 6,
+    "type" : "SCALAR",
+    "min" : [ 0.0 ],
+    "max" : [ 5.0 ]
+  } ]
+}
