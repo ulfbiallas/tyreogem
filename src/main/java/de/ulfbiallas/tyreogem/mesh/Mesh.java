@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import de.ulfbiallas.tyreogem.core.math.Vec3d;
+import de.ulfbiallas.tyreogem.core.spatial.Plane;
 import de.ulfbiallas.tyreogem.core.spatial.Triangle;
 
 public class Mesh {
@@ -66,6 +67,18 @@ public class Mesh {
         final Vec3d b = v2.sub(v0);
 
         return a.cross(b).normalize();
+    }
+
+    public Mesh mirrorByPoint(Vec3d point) {
+        final List<Vec3d> mirroredPoints = getPoints().stream().map(p -> p.mirrorByPoint(point)).collect(Collectors.toList());
+        final List<Face> facesWithMirroredNormals = getFaces().stream().map(face -> new Face(face.getVertices().stream().map(vertex ->new Vertex(vertex.getPointIndex(), vertex.getNormal().negate(), vertex.getTextureCoordinates())).collect(Collectors.toList()), face.getMaterial())).collect(Collectors.toList());
+        return new Mesh(mirroredPoints, facesWithMirroredNormals).reverseWinding();
+    }
+
+    public Mesh mirrorByPlane(Plane plane) {
+        final List<Vec3d> mirroredPoints = getPoints().stream().map(p -> p.mirrorByPlane(plane)).collect(Collectors.toList());
+        final List<Face> facesWithMirroredNormals = getFaces().stream().map(face -> new Face(face.getVertices().stream().map(vertex ->new Vertex(vertex.getPointIndex(), vertex.getNormal().mirrorByPlane(new Plane(Vec3d.zero(), plane.getNormal())), vertex.getTextureCoordinates())).collect(Collectors.toList()), face.getMaterial())).collect(Collectors.toList());
+        return new Mesh(mirroredPoints, facesWithMirroredNormals).reverseWinding();
     }
 
     public Mesh triangulateByEarClipping() {

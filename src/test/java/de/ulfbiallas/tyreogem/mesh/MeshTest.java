@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import de.ulfbiallas.tyreogem.core.math.Vec2d;
 import de.ulfbiallas.tyreogem.core.math.Vec3d;
+import de.ulfbiallas.tyreogem.core.spatial.Plane;
 
 public class MeshTest {
 
@@ -123,6 +124,46 @@ public class MeshTest {
         Assert.assertEquals(0.0, normalRewinded.x, 0.00001);
         Assert.assertEquals(-1.0, normalRewinded.y, 0.00001);
         Assert.assertEquals(0.0, normalRewinded.z, 0.00001);    
+    }
+
+    @Test
+    public void test_mirrorByPoint() {
+        Mesh mesh = createMesh();
+        Vec3d point = new Vec3d(1.0, 1.0, 1.0);
+        Mesh meshMirrored = mesh.mirrorByPoint(point);
+
+        Assert.assertEquals(mesh.getPoints().get(0), meshMirrored.getPoints().get(0).mirrorByPoint(point));
+        Assert.assertEquals(mesh.getPoints().get(1), meshMirrored.getPoints().get(1).mirrorByPoint(point));
+        Assert.assertEquals(mesh.getPoints().get(2), meshMirrored.getPoints().get(2).mirrorByPoint(point));
+        Assert.assertEquals(mesh.getPoints().get(3), meshMirrored.getPoints().get(3).mirrorByPoint(point));
+
+        Assert.assertEquals(mesh.getFaces().get(0).getVertices().get(0).getPointIndex(), meshMirrored.getFaces().get(0).getVertices().get(2).getPointIndex());
+        Assert.assertEquals(mesh.getFaces().get(0).getVertices().get(1).getPointIndex(), meshMirrored.getFaces().get(0).getVertices().get(1).getPointIndex());
+        Assert.assertEquals(mesh.getFaces().get(0).getVertices().get(2).getPointIndex(), meshMirrored.getFaces().get(0).getVertices().get(0).getPointIndex());
+
+        Assert.assertEquals(mesh.getFaces().get(1).getVertices().get(0).getPointIndex(), meshMirrored.getFaces().get(1).getVertices().get(2).getPointIndex());
+        Assert.assertEquals(mesh.getFaces().get(1).getVertices().get(1).getPointIndex(), meshMirrored.getFaces().get(1).getVertices().get(1).getPointIndex());
+        Assert.assertEquals(mesh.getFaces().get(1).getVertices().get(2).getPointIndex(), meshMirrored.getFaces().get(1).getVertices().get(0).getPointIndex());
+    }
+
+    @Test
+    public void test_mirrorByPlane() {
+        Mesh mesh = createMesh();
+        Plane plane = new Plane(new Vec3d(1.0, 1.0, 1.0), new Vec3d(0.0, 1.0, 0.0));
+        Mesh meshMirrored = mesh.mirrorByPlane(plane);
+
+        Assert.assertEquals(mesh.getPoints().get(0), meshMirrored.getPoints().get(0).mirrorByPlane(plane));
+        Assert.assertEquals(mesh.getPoints().get(1), meshMirrored.getPoints().get(1).mirrorByPlane(plane));
+        Assert.assertEquals(mesh.getPoints().get(2), meshMirrored.getPoints().get(2).mirrorByPlane(plane));
+        Assert.assertEquals(mesh.getPoints().get(3), meshMirrored.getPoints().get(3).mirrorByPlane(plane));
+
+        Assert.assertEquals(mesh.getFaces().get(0).getVertices().get(0).getPointIndex(), meshMirrored.getFaces().get(0).getVertices().get(2).getPointIndex());
+        Assert.assertEquals(mesh.getFaces().get(0).getVertices().get(1).getPointIndex(), meshMirrored.getFaces().get(0).getVertices().get(1).getPointIndex());
+        Assert.assertEquals(mesh.getFaces().get(0).getVertices().get(2).getPointIndex(), meshMirrored.getFaces().get(0).getVertices().get(0).getPointIndex());
+
+        Assert.assertEquals(mesh.getFaces().get(1).getVertices().get(0).getPointIndex(), meshMirrored.getFaces().get(1).getVertices().get(2).getPointIndex());
+        Assert.assertEquals(mesh.getFaces().get(1).getVertices().get(1).getPointIndex(), meshMirrored.getFaces().get(1).getVertices().get(1).getPointIndex());
+        Assert.assertEquals(mesh.getFaces().get(1).getVertices().get(2).getPointIndex(), meshMirrored.getFaces().get(1).getVertices().get(0).getPointIndex());
     }
 
     @Test
