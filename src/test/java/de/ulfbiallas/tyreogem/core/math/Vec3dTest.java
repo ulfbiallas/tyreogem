@@ -6,6 +6,8 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
+import de.ulfbiallas.tyreogem.core.spatial.Plane;
+
 public class Vec3dTest {
 
     @Test
@@ -176,6 +178,26 @@ public class Vec3dTest {
         Vec3d point = new Vec3d(4.0, 1.0, -3.0);
         double distance = point.sub(v).norm();
         Assert.assertEquals(v.distanceTo(point), distance, 0.00001);
+    }
+
+    @Test
+    public void testMirrorByPoint() {
+        Vec3d v = new Vec3d(-3.0, 2.0, 4.0);
+        Vec3d point = new Vec3d(1.0, 1.0, 1.0);
+        Vec3d vMirrored = v.mirrorByPoint(point);
+        Assert.assertEquals(5.0, vMirrored.x, 0.00001);
+        Assert.assertEquals(0.0, vMirrored.y, 0.00001);
+        Assert.assertEquals(-2.0, vMirrored.z, 0.00001);
+    }
+
+    @Test
+    public void testMirrorByPlane() {
+        Vec3d v = new Vec3d(-3.0, 2.0, 4.0);
+        Plane plane = new Plane(new Vec3d(1.0, 1.0, 1.0), new Vec3d(0.0, 1.0, 0.0));
+        Vec3d vMirrored = v.mirrorByPlane(plane);
+        Assert.assertEquals(-3.0, vMirrored.x, 0.00001);
+        Assert.assertEquals(0.0, vMirrored.y, 0.00001);
+        Assert.assertEquals(4.0, vMirrored.z, 0.00001);
     }
 
     @Test
