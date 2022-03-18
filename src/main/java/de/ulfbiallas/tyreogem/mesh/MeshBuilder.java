@@ -11,6 +11,10 @@ import de.ulfbiallas.tyreogem.core.math.Vec3d;
 public class MeshBuilder {
 
     public static Mesh createSphere(double radius, int vSegments, int hSegments) {
+        return createSphere(radius, vSegments, hSegments, null);
+    }
+
+    public static Mesh createSphere(double radius, int vSegments, int hSegments, Material material) {
         int vn = vSegments < 3 ? 3 : vSegments;
         int hn = hSegments < 2 ? 2 : hSegments;
 
@@ -34,20 +38,20 @@ public class MeshBuilder {
                             new Vertex(1+s0, null, null),
                             new Vertex(1+s1, null, null),
                             new Vertex(0, null, null)
-                    )));
+                    ), material));
                 } else if(h==hn-1) {
                     faces.add(new Face(Arrays.asList(
                             new Vertex(points.size()-1, null, null),
                             new Vertex(1+(h-1)*vn+s1, null, null),
                             new Vertex(1+(h-1)*vn+s0, null, null)
-                    )));
+                    ), material));
                 } else {
                     faces.add(new Face(Arrays.asList(
                             new Vertex(1+h*vn+s0, null, null),
                             new Vertex(1+h*vn+s1, null, null),
                             new Vertex(1+(h-1)*vn+s1, null, null),
                             new Vertex(1+(h-1)*vn+s0, null, null)
-                    )));
+                    ), material));
                 }
             }
         }
@@ -56,6 +60,10 @@ public class MeshBuilder {
     }
 
     public static Mesh createCuboid(Vec3d position, Vec3d dimension) {
+        return createCuboid(position, dimension, null);
+    }
+
+    public static Mesh createCuboid(Vec3d position, Vec3d dimension, Material material) {
         final Vec3d r = dimension.scale(0.5);
         final List<Vec3d> offsets = Arrays.asList( //
                 new Vec3d(-r.x, -r.y, -r.z), //
@@ -74,42 +82,42 @@ public class MeshBuilder {
             new Vertex(1, new Vec3d(0, -1, 0), null), //
             new Vertex(2, new Vec3d(0, -1, 0), null), //
             new Vertex(3, new Vec3d(0, -1, 0), null) //
-        ));
+        ), material);
 
         final Face top = new Face(Arrays.asList( //
             new Vertex(7, new Vec3d(0, 1, 0), null), //
             new Vertex(6, new Vec3d(0, 1, 0), null), //
             new Vertex(5, new Vec3d(0, 1, 0), null), //
             new Vertex(4, new Vec3d(0, 1, 0), null) //
-        ));
+        ), material);
 
         final Face left = new Face(Arrays.asList( //
             new Vertex(4, new Vec3d(-1, 0, 0), null), //
             new Vertex(0, new Vec3d(-1, 0, 0), null), //
             new Vertex(3, new Vec3d(-1, 0, 0), null), //
             new Vertex(7, new Vec3d(-1, 0, 0), null) //
-        ));
+        ), material);
 
         final Face right = new Face(Arrays.asList( //
             new Vertex(6, new Vec3d(1, 0, 0), null), //
             new Vertex(2, new Vec3d(1, 0, 0), null), //
             new Vertex(1, new Vec3d(1, 0, 0), null), //
             new Vertex(5, new Vec3d(1, 0, 0), null) //
-        ));
+        ), material);
 
         final Face front = new Face(Arrays.asList( //
             new Vertex(4, new Vec3d(0, 0, -1), null), //
             new Vertex(5, new Vec3d(0, 0, -1), null), //
             new Vertex(1, new Vec3d(0, 0, -1), null), //
             new Vertex(0, new Vec3d(0, 0, -1), null) //
-        ));
+        ), material);
 
         final Face back = new Face(Arrays.asList( //
             new Vertex(6, new Vec3d(0, 0, 1), null), //
             new Vertex(7, new Vec3d(0, 0, 1), null), //
             new Vertex(3, new Vec3d(0, 0, 1), null), //
             new Vertex(2, new Vec3d(0, 0, 1), null) //
-        ));
+        ), material);
 
         final List<Face> faces = Arrays.asList(bottom, top, left, right, front, back);
 
