@@ -42,6 +42,11 @@ public class Vec3d {
         this.z = v.z;
     }
 
+    @Override
+    public Vec3d clone() {
+        return new Vec3d(this.x, this.y, this.z);
+    }
+
     public Vec3d add(Vec3d v) {
         return new Vec3d(x + v.x, y + v.y, z + v.z);
     }

@@ -45,6 +45,15 @@ public class Vec2dTest {
     }
 
     @Test
+    public void testClone() {
+        Vec2d v = new Vec2d(1.0, 2.0);
+        Vec2d vCloned = v.clone();
+        Assert.assertEquals(vCloned.x, v.x, 0.00001);
+        Assert.assertEquals(vCloned.y, v.y, 0.00001);
+        Assert.assertNotEquals(vCloned.hashCode(), v.hashCode());
+    }
+
+    @Test
     public void testAdd() {
         Vec2d v1 = new Vec2d(0.0, 2.0);
         Vec2d v2 = new Vec2d(5.0, -3.0);

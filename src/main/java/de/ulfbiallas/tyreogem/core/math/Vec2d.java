@@ -34,6 +34,11 @@ public class Vec2d {
         this.y = v.y;
     }
 
+    @Override
+    public Vec2d clone() {
+        return new Vec2d(this.x, this.y);
+    }
+
     public Vec2d add(Vec2d v) {
         return new Vec2d(x + v.x, y + v.y);
     }

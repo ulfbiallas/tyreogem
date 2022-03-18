@@ -58,6 +58,16 @@ public class Vec3dTest {
     }
 
     @Test
+    public void testClone() {
+        Vec3d v = new Vec3d(1.0, 2.0, -3.0);
+        Vec3d vCloned = v.clone();
+        Assert.assertEquals(vCloned.x, v.x, 0.00001);
+        Assert.assertEquals(vCloned.y, v.y, 0.00001);
+        Assert.assertEquals(vCloned.z, v.z, 0.00001);
+        Assert.assertNotEquals(vCloned.hashCode(), v.hashCode());
+    }
+
+    @Test
     public void testAdd() {
         Vec3d v1 = new Vec3d(0.0, 2.0, -1.0);
         Vec3d v2 = new Vec3d(5.0, -3.0, 8.0);
