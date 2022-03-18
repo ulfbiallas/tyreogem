@@ -125,6 +125,47 @@ public class MeshTest {
         Assert.assertEquals(0.0, normalRewinded.z, 0.00001);    
     }
 
+    @Test
+    public void test_triangulateByEarClipping() {
+        Vec3d v4 = new Vec3d(-0.5, 0.0, 0.5);
+        final Vertex vertex0 = new Vertex(0, new Vec3d(0.0, 1.0, 0.0), new Vec2d( 0.0, 0.0));
+        final Vertex vertex1 = new Vertex(1, new Vec3d(0.0, 1.0, 0.0), new Vec2d( 1.0, 0.0));
+        final Vertex vertex2 = new Vertex(2, new Vec3d(0.0, 1.0, 0.0), new Vec2d( 1.0, 1.0));
+        final Vertex vertex3 = new Vertex(3, new Vec3d(0.0, 1.0, 0.0), new Vec2d( 0.0, 1.0));
+        final Vertex vertex4 = new Vertex(4, new Vec3d(0.0, 1.0, 0.0), new Vec2d(-0.5, 0.5));
+        final Face face = new Face(Arrays.asList(vertex0, vertex1, vertex2, vertex3, vertex4));
+        final Mesh mesh = new Mesh(Arrays.asList(v0, v1, v2, v3, v4), Arrays.asList(face));
+
+        final Mesh triangulatedMesh = mesh.triangulateByEarClipping();
+
+        Assert.assertEquals(mesh.getPoints().size(), triangulatedMesh.getPoints().size());
+        Assert.assertEquals(mesh.getPoints().get(0), triangulatedMesh.getPoints().get(0));
+        Assert.assertEquals(mesh.getPoints().get(1), triangulatedMesh.getPoints().get(1));
+        Assert.assertEquals(mesh.getPoints().get(2), triangulatedMesh.getPoints().get(2));
+        Assert.assertEquals(mesh.getPoints().get(3), triangulatedMesh.getPoints().get(3));
+        Assert.assertEquals(mesh.getPoints().get(4), triangulatedMesh.getPoints().get(4));
+
+        Assert.assertEquals(3, triangulatedMesh.getFaces().size());
+
+        final Face face0 = triangulatedMesh.getFaces().get(0);
+        Assert.assertEquals(3, face0.getVertices().size());
+        Assert.assertEquals(0, face0.getVertices().get(0).getPointIndex());
+        Assert.assertEquals(1, face0.getVertices().get(1).getPointIndex());
+        Assert.assertEquals(2, face0.getVertices().get(2).getPointIndex());
+
+        final Face face1 = triangulatedMesh.getFaces().get(1);
+        Assert.assertEquals(3, face1.getVertices().size());
+        Assert.assertEquals(0, face1.getVertices().get(0).getPointIndex());
+        Assert.assertEquals(2, face1.getVertices().get(1).getPointIndex());
+        Assert.assertEquals(3, face1.getVertices().get(2).getPointIndex());
+
+        final Face face2 = triangulatedMesh.getFaces().get(2);
+        Assert.assertEquals(3, face2.getVertices().size());
+        Assert.assertEquals(0, face2.getVertices().get(0).getPointIndex());
+        Assert.assertEquals(3, face2.getVertices().get(1).getPointIndex());
+        Assert.assertEquals(4, face2.getVertices().get(2).getPointIndex());
+    }
+
     private static Mesh createMesh() {
         final Vertex vertex0 = new Vertex(0, new Vec3d(0.0, 1.0, 0.0), new Vec2d(0.0, 0.0));
         final Vertex vertex1 = new Vertex(1, new Vec3d(0.0, 1.0, 0.0), new Vec2d(1.0, 0.0));

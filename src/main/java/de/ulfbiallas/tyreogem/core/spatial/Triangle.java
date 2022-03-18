@@ -70,17 +70,7 @@ public class Triangle {
         return new RayIntersection();
     }
 
-    private boolean isIntersectionInsideTriangle(Intersection planeIntersection) {
-        if(planeIntersection.isIntersecting()) {
-            final Vec3d x = planeIntersection.getIntersection();
-            if(isPointOnPlaneInside(x)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean isPointOnPlaneInside(Vec3d point) {
+    public boolean isPointInside(Vec3d point) {
         final Vec3d r1 = b.sub(a);
         final Vec3d r2 = c.sub(a);
         final Vec3d pa = point.sub(a);
@@ -93,12 +83,26 @@ public class Triangle {
         final double mf = r2.dot(pa);
 
         final Matrix2x2d matrix = new Matrix2x2d(ma, mb, mc, md);
-        final Vec2d result = matrix.solve(new Vec2d(me, mf));
+        try {
+            final Vec2d result = matrix.solve(new Vec2d(me, mf));
+            final double lambda = result.x;
+            final double mu = result.y;
 
-        final double lambda = result.x;
-        final double mu = result.y;
-
-        return mu >= 0 && lambda >= 0 && mu+lambda <= 1;
+            return mu >= 0 && lambda >= 0 && mu+lambda <= 1;
+        } catch(Exception e) {
+            return false; // matrix is singular
+        }
     }
+
+    private boolean isIntersectionInsideTriangle(Intersection planeIntersection) {
+        if(planeIntersection.isIntersecting()) {
+            final Vec3d x = planeIntersection.getIntersection();
+            if(isPointInside(x)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }

@@ -58,7 +58,11 @@ public class ObjExporter implements Exporter {
     }
 
     private String createMtlLine(String name, String value) {
-        return name + " " + value +"\n";
+        if(value != null) {
+            return name + " " + value +"\n";
+        } else {
+            return "";
+        }
     }
 
     public void writeMtlFile(ObjMesh objMesh, Writer writer) throws IOException {
