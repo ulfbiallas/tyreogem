@@ -55,6 +55,10 @@ public class Vec2d {
         return new Vec2d(x * s, y * s);
     }
 
+    public Vec2d scaleComponentWise(Vec2d v) {
+        return new Vec2d(x * v.x, y * v.y);
+    }
+
     public Vec2d negate() {
         return new Vec2d(-x, -y);
     }

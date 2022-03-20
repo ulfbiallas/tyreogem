@@ -105,8 +105,18 @@ public class Vec3dTest {
         Assert.assertEquals(-10.0, vScaled.y, 0.00001);
         Assert.assertEquals(-25.0, vScaled.z, 0.00001);
     }
-    @Test
 
+    @Test
+    public void testScalComponentWise() {
+        Vec3d v = new Vec3d(-3.0, 2.0, 5.0);
+        Vec3d factor = new Vec3d(2.0, 5.0, -1.0);
+        Vec3d vScaled = v.scaleComponentWise(factor);
+        Assert.assertEquals(-6.0, vScaled.x, 0.00001);
+        Assert.assertEquals(10.0, vScaled.y, 0.00001);
+        Assert.assertEquals(-5.0, vScaled.z, 0.00001);
+    }
+
+    @Test
     public void testNorm2() {
         Vec3d v = new Vec3d(-3.0, 2.0, 4.0);
         double vSquaredLength = v.norm2();

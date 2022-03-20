@@ -88,6 +88,15 @@ public class Vec2dTest {
     }
 
     @Test
+    public void testScalComponentWise() {
+        Vec2d v = new Vec2d(-3.0, 2.0);
+        Vec2d factor = new Vec2d(2.0, 5.0);
+        Vec2d vScaled = v.scaleComponentWise(factor);
+        Assert.assertEquals(-6.0, vScaled.x, 0.00001);
+        Assert.assertEquals(10.0, vScaled.y, 0.00001);
+    }
+
+    @Test
     public void testNorm2() {
         Vec2d v = new Vec2d(-3.0, 2.0);
         double vSquaredLength = v.norm2();

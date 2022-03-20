@@ -65,6 +65,10 @@ public class Vec3d {
         return new Vec3d(x * s, y * s, z * s);
     }
 
+    public Vec3d scaleComponentWise(Vec3d v) {
+        return new Vec3d(x * v.x, y * v.y, z * v.z);
+    }
+
     public Vec3d negate() {
         return new Vec3d(-x, -y, -z);
     }
