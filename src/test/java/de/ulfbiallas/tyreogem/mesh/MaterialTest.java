@@ -1,10 +1,11 @@
 package de.ulfbiallas.tyreogem.mesh;
 
-import de.ulfbiallas.tyreogem.core.math.Vec3d;
+import java.io.File;
+
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.File;
+import de.ulfbiallas.tyreogem.core.math.Vec3d;
 
 public class MaterialTest {
 
