@@ -2,6 +2,8 @@ package de.ulfbiallas.tyreogem.core.math;
 
 import java.util.List;
 
+import de.ulfbiallas.tyreogem.core.spatial.Plane;
+
 public class Vec3d {
 
     public final double x;
@@ -42,6 +44,11 @@ public class Vec3d {
         this.z = v.z;
     }
 
+    @Override
+    public Vec3d clone() {
+        return new Vec3d(this.x, this.y, this.z);
+    }
+
     public Vec3d add(Vec3d v) {
         return new Vec3d(x + v.x, y + v.y, z + v.z);
     }
@@ -56,6 +63,10 @@ public class Vec3d {
 
     public Vec3d scale(double s) {
         return new Vec3d(x * s, y * s, z * s);
+    }
+
+    public Vec3d scaleComponentWise(Vec3d v) {
+        return new Vec3d(x * v.x, y * v.y, z * v.z);
     }
 
     public Vec3d negate() {
@@ -84,6 +95,16 @@ public class Vec3d {
 
     public double[] toArray() {
         return new double[]{x, y, z};
+    }
+
+    public Vec3d mirrorByPoint(Vec3d point) {
+        final Vec3d connection = this.sub(point);
+        return point.sub(connection);
+    }
+
+    public Vec3d mirrorByPlane(Plane plane) {
+        final double signedDistance = plane.signedDistanceTo(this);
+        return this.sub(plane.getNormal().scale(2.0 * signedDistance));
     }
 
     @Override

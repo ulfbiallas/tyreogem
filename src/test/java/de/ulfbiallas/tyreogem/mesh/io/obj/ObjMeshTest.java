@@ -23,7 +23,7 @@ public class ObjMeshTest {
         Assert.assertEquals(4*6, objMesh.getVertexNormals().size());
         Assert.assertEquals(new Vec3d(0, -1, 0), objMesh.getVertexNormals().get(0));
 
-        Assert.assertTrue(objMesh.getTextureCoordinates().isEmpty());
+        Assert.assertEquals(4*6, objMesh.getTextureCoordinates().size());
 
         Assert.assertEquals(6, objMesh.getFaces().size());
         Assert.assertEquals(4, objMesh.getFaces().get(0).getIndices().size());

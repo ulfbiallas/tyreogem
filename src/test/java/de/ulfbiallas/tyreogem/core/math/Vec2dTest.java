@@ -45,6 +45,15 @@ public class Vec2dTest {
     }
 
     @Test
+    public void testClone() {
+        Vec2d v = new Vec2d(1.0, 2.0);
+        Vec2d vCloned = v.clone();
+        Assert.assertEquals(vCloned.x, v.x, 0.00001);
+        Assert.assertEquals(vCloned.y, v.y, 0.00001);
+        Assert.assertNotEquals(vCloned.hashCode(), v.hashCode());
+    }
+
+    @Test
     public void testAdd() {
         Vec2d v1 = new Vec2d(0.0, 2.0);
         Vec2d v2 = new Vec2d(5.0, -3.0);
@@ -76,6 +85,15 @@ public class Vec2dTest {
         Vec2d vScaled = v.scale(-5.0);
         Assert.assertEquals(15.0, vScaled.x, 0.00001);
         Assert.assertEquals(-10.0, vScaled.y, 0.00001);
+    }
+
+    @Test
+    public void testScalComponentWise() {
+        Vec2d v = new Vec2d(-3.0, 2.0);
+        Vec2d factor = new Vec2d(2.0, 5.0);
+        Vec2d vScaled = v.scaleComponentWise(factor);
+        Assert.assertEquals(-6.0, vScaled.x, 0.00001);
+        Assert.assertEquals(10.0, vScaled.y, 0.00001);
     }
 
     @Test
