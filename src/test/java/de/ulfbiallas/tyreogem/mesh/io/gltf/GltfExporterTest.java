@@ -27,7 +27,7 @@ public class GltfExporterTest {
         final Mesh mesh = createMesh(material);
 
         final Writer writer = new StringWriter();
-        exporter.exportMesh(mesh, writer);
+        exporter.exportMesh(mesh, writer, null, true);
 
         String expectedExport = IOUtils.toString(this.getClass().getClassLoader().getResourceAsStream("gltf/model-with-materials.gltf"),"UTF-8");
         final String export = writer.toString();
@@ -41,7 +41,7 @@ public class GltfExporterTest {
         final Mesh mesh = createMesh(material);
 
         final Writer writer = new StringWriter();
-        exporter.exportMesh(mesh, writer);
+        exporter.exportMesh(mesh, writer, null, true);
 
         String expectedExport = IOUtils.toString(this.getClass().getClassLoader().getResourceAsStream("gltf/model-without-materials.gltf"),"UTF-8");
         final String export = writer.toString();
