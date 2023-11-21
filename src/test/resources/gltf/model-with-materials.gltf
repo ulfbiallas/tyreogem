@@ -109,8 +109,8 @@
     "source" : 0
   } ],
   "images" : [ {
-    "bufferView" : 3,
-    "mimeType" : "image/png"
+    "mimeType" : "image/png",
+    "bufferView" : 3
   } ],
   "samplers" : [ {
     "magFilter" : 9729,
