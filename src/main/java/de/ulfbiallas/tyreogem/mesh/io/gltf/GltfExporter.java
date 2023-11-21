@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -100,7 +101,7 @@ public class GltfExporter implements Exporter {
                 materialIndex = gltfFile.addTexture(material.getMap_Kd(), embedTextures);
                 if(!embedTextures) {
                     final File target = new File(directory.getAbsolutePath(), material.getMap_Kd().getName());
-                    Files.copy(material.getMap_Kd().toPath(), target.toPath());
+                    Files.copy(material.getMap_Kd().toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 }
             }
 
