@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,16 +28,20 @@ public class GltfExporter implements Exporter {
 
     @Override
     public void exportMesh(Mesh mesh, File directory, String fileName) {
+        exportMesh(mesh, directory, fileName, true);
+    }
+
+    public void exportMesh(Mesh mesh, File directory, String fileName, boolean embedTextures) {
         final File file = new File(directory.getAbsolutePath(), fileName + ".gltf");
         try {
             final FileWriter fileWriter = new FileWriter(file);
-            exportMesh(mesh, fileWriter);
+            exportMesh(mesh, fileWriter, directory, embedTextures);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void exportMesh(Mesh mesh, Writer writer) {
+    public void exportMesh(Mesh mesh, Writer writer, File directory, boolean embedTextures) throws IOException {
         final Mesh triangleMesh = mesh.triangulateByEarClipping();
 
         final GltfAsset gltfAsset = new GltfAsset();
@@ -92,7 +97,11 @@ public class GltfExporter implements Exporter {
         for(Material material: materials) {
             Integer materialIndex = null;
             if(material != null && material.getMap_Kd() != null) {
-                materialIndex = gltfFile.addTexture(material.getMap_Kd());
+                materialIndex = gltfFile.addTexture(material.getMap_Kd(), embedTextures);
+                if(!embedTextures) {
+                    final File target = new File(directory.getAbsolutePath(), material.getMap_Kd().getName());
+                    Files.copy(material.getMap_Kd().toPath(), target.toPath());
+                }
             }
 
             final int indicesIndex = gltfFile.setIndices(indicesByMaterial.get(material));
@@ -114,4 +123,5 @@ public class GltfExporter implements Exporter {
             e.printStackTrace();
         }
     }
+
 }

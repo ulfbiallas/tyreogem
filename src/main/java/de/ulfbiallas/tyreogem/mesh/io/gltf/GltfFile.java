@@ -229,27 +229,34 @@ public class GltfFile {
         }
     }
 
-    public int addTexture(File textureFile) {
+    public int addTexture(File textureFile, boolean embedTextures) {
         try {
-            InputStream inputStream = new FileInputStream(textureFile);
-            ByteBuffer data = ByteBuffer.allocate(inputStream.available());
-            data.order(ByteOrder.LITTLE_ENDIAN);
-            Channels.newChannel(inputStream).read(data);
-
-            final byte[] encoded = Base64.getEncoder().encode(data.array());
-            final String bufferBase64 = new String(encoded);
-            final String uri = "data:application/gltf-buffer;base64," + bufferBase64;
-            final GltfBuffer gltfBuffer = new GltfBuffer(uri, data.capacity());
-            final int bufferIndex = this.buffers.size();
-            this.buffers.add(gltfBuffer);
-
-            final int bufferViewIndex = this.bufferViews.size();
-            this.bufferViews.add(new GltfBufferView(bufferIndex, 0, gltfBuffer.getByteLength()));
-
+            
+            final int imageIndex = this.images.size();
             final String mimeType = getMimeType(textureFile);
 
-            final int imageIndex = this.images.size();
-            this.images.add(new GltfImage(bufferViewIndex, mimeType));
+            if(embedTextures) {
+                InputStream inputStream = new FileInputStream(textureFile);
+                ByteBuffer data = ByteBuffer.allocate(inputStream.available());
+                data.order(ByteOrder.LITTLE_ENDIAN);
+                Channels.newChannel(inputStream).read(data);
+
+                final byte[] encoded = Base64.getEncoder().encode(data.array());
+                final String bufferBase64 = new String(encoded);
+                final String uri = "data:application/gltf-buffer;base64," + bufferBase64;
+                final GltfBuffer gltfBuffer = new GltfBuffer(uri, data.capacity());
+                final int bufferIndex = this.buffers.size();
+                this.buffers.add(gltfBuffer);
+
+                final int bufferViewIndex = this.bufferViews.size();
+                this.bufferViews.add(new GltfBufferView(bufferIndex, 0, gltfBuffer.getByteLength()));
+
+                this.images.add(new GltfImageEmbedded(bufferViewIndex, mimeType));  
+            } else {
+                
+                this.images.add(new GltfImageExternal(textureFile.getName(), mimeType));
+            }
+
 
             final int samplerIndex = this.samplers.size();
             this.samplers.add(new GltfSampler(SamplerMagFilter.LINEAR, SamplerMinFilter.LINEAR, SamplerWrapping.REPEAT, SamplerWrapping.REPEAT));
